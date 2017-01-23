@@ -24,7 +24,7 @@ In addition, this project will include:
 This app will consist of a single screen with one or two grids/mazes, and nav links to the Github, LinkedIn,
 and the Description modal.  The controls will include Start and Stop buttons as well as options to change the starting data.  On the left, four clickable options will be used to toggle between starting data, type of algorithm, single or double algorithm, and algorithm(s) to run.  
 
-![wireframes](./"js wirefram.png")
+![wireframes](./js-wireframe.png)
 
 ### Architecture and Technologies
 
