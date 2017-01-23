@@ -1,8 +1,8 @@
-## Ken's Algorithms Demo 
+## JS Project Proposal: Algorithm Visualizer
 
 ### Background
 
-Algorithms Visualization isn't a game unless a person gets creative. I will be using some basic sorting algorithms like heap, bubble, merge, quick (randomized), radix, and bucket. There will be maze solving algorithms like A BFS, DFS, Primm's, Kruskal's, and Dijkstra's. Depending on how long these take there may or may not be more algorithms.
+Algorithms Visualization is as the name describes. I will be using some basic sorting algorithms like heap, bubble, merge, quick (randomized), radix, and bucket. There will be maze solving algorithms like A BFS, DFS, Primm's, Kruskal's, and Dijkstra's. Depending on how long these take there may or may not be more algorithms.
 
 There should be some variations of certain algorithms included in the above list. The **Functionality & MVP** and **Bonus Features** sections outline the project and future updates.  
 
