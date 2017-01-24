@@ -25,6 +25,7 @@ and the Description modal.  The controls will include Start and Stop buttons as 
 
 ![wireframes](./js-wireframe.png)
 
+![wireframes](./dfsalgowire.png)
 ### Architecture and Technologies
 
 This project will be implemented with the following technologies:
