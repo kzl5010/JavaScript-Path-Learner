@@ -2,7 +2,7 @@
 
 ### Background
 
-Algorithms Visualization is as the name describes. I will be using some basic sorting algorithms like heap, bubble, merge, quick (randomized), radix, and bucket. There will be maze solving algorithms like A BFS, DFS, Primm's, Kruskal's, and Dijkstra's. Depending on how long these take there may or may not be more algorithms.
+Algorithms Visualization is as the name describes. There will be maze solving algorithms like A\*, BFS, DFS, Primm's, Kruskal's, and Dijkstra's. Depending on how long these take there may or may not be more algorithms.
 
 There should be some variations of certain algorithms included in the above list. The **Functionality & MVP** and **Bonus Features** sections outline the project and future updates.  
 
@@ -12,7 +12,6 @@ With this Algorithm Visualizer, users will be able to:
 
 - [ ] Start and pause sorting and graph algorithms 
 - [ ] Choose from preset initial states and randomized data.
-- [ ] Compare the runtime between two algorithms that deal with the same input/problem 
 
 In addition, this project will include:
 
@@ -22,7 +21,7 @@ In addition, this project will include:
 ### Wireframes
 
 This app will consist of a single screen with one or two grids/mazes, and nav links to the Github, LinkedIn,
-and the Description modal.  The controls will include Start and Stop buttons as well as options to change the starting data.  On the left, four clickable options will be used to toggle between starting data, type of algorithm, single or double algorithm, and algorithm(s) to run.  
+and the Description modal.  The controls will include Start and Stop buttons as well as options to change the starting data.  On the left, two clickable options will be used to select starting data and algorithm(s) to run.  
 
 ![wireframes](./js-wireframe.png)
 
@@ -40,8 +39,6 @@ In addition to the webpack entry file, there will be four scripts involved in th
 
 `algorithm.js`: this script will handle the logic behind the scenes.  An Algorithm object will hold a `name` (of the algorithm) and access two scripts (sort or graph) to execute an algorithm.  It will be responsible for executing a given algorithm.
 
-`sort.js`: this script will house the logic and functions for all the sorting algorithms.
-
 `graph.js`: this script will hour the logic and functions for all the graph algorithms. 
 
 ### Implementation Timeline
@@ -51,7 +48,7 @@ In addition to the webpack entry file, there will be four scripts involved in th
 - Get a green bundle with `webpack`
 - Learn enough `Easel.js` to render an object to the `Canvas` element
 
-**Day 2**: Dedicate this day to learning the `Easel.js` API.  First, build out the `sort` and `graph ` objects to connect to the `algorithm` object.  Then, use `grid.js` to create and render an array or maze/graph depending on the algorithm. Goals for the day:
+**Day 2**: Dedicate this day to learning the `Easel.js` API.  First, build out the `graph ` objects to connect to the `algorithm` object.  Then, use `grid.js` to create and render an array or maze/graph depending on the algorithm. Goals for the day:
 
 - Complete the `sort.js` module (constructor, update functions)
 - Render an array or maze to the `Canvas` using `Easel.js`
@@ -75,3 +72,4 @@ Some possible updates are:
 
 - [ ] Add their own data to test the algorithms
 - [ ] Add multiple choices for starting states that are interesting
+- [ ] Compare similar algorithms like sorting vs sorting or graph vs graph.
