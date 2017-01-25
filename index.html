@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>A*maker</title>
+  </head>
+  <body>
+    <div id="header">
+      <h1>Javascript Maze Solve</h1>
+      <div class="links">
+          <!-- <a href=''>Github</a>
+          <a href=''>LinkedIn</a>  -->
+      </div>
+  	</div>
+
+  	<div id="content">
+  		<h2>How to Zar</h2>
+  	    <div id="controls" class='clear'>
+	    		<label for="WallFreq">Percent of Walls</label>
+	    		<select id="WallFreq">
+	    			<option value=".2">20%</option>
+	    			<option value=".3">30%</option>
+	    			<option value=".4">40%</option>
+	    			<option value=".5">50%</option>
+	    		</select>
+	    		<br />
+	    		<label for="GridSize">Maze Size </label>
+	    		<select id="GridSize" name="GridSize">
+	    			<option value="10">10x10</option>
+	    			<option value="20">20x20</option>
+	    			<option value="30">30x30</option>
+	    			<option value="40">40x40</option>
+	    			<option value="50" selected="selected">50x50</option>
+	    			<option value="100">100x100</option>
+	    			<option value="150">150x150</option>
+	    			<option value="200">200x200</option>
+	    		</select>
+
+	    		<br />
+	    		<label for="showAll">Show all tiles searched?</label>
+	    		<input type="checkbox" name="showAll" id="showAll" />
+	    		<br />
+	    		<label for="Diagonal">Allow diagonal movement?</label>
+	    		<input type="checkbox" name="Diagonal" id="Diagonal" />
+	    		<br />
+	    		<label for="nextNode">Closest node if target unreachable?</label>
+	    		<input type="checkbox" name="nextNode" id="nextNode" />
+	    		<br />
+	    		<label for="weighted">Add random weights?</label>
+	    		<input type="checkbox" name="weighted" id="weighted" />
+	    		<br />
+	    		<label for="displayWeights">Display weight values?</label>
+	    		<input type="checkbox" name="displayWeights" id="displayWeights" />
+	    		<br />
+	    		<input type="button" id="generateGrid" value="New Grid" />
+	    		<fieldset id='weightsKey'>
+	    			<legend>Key:</legend>
+	    			<div>
+	    			<span class="grid_item weight1" style="width: 10px; height: 14.25px;" id="keyWeight3"></span> Weight of 1 </div>
+	    			<div>
+	    			<span class="grid_item weight3" style="width: 10px; height: 10px;" id="keyWeight3"></span> Weight of 2 </div>
+	    			<div>
+	    			<span class="grid_item weight5" style="width: 10px; height: 10px;" id="keyWeight3"></span> Weight of 5 </div>
+	    			<div>
+	    			<span class="grid_item wall" style="width: 10px; height: 10px;" id="keyWall"></span> Wall </div>
+	    		</fieldset>
+				<br />
+  		<span id="message">Click on a grid position to search</span>
+  	    </div>
+
+  	    <div id="main">
+  	    	<div id="search_grid"></div>
+  	    </div>
+
+    </div>
+  	<div id="footer"></div>
+
+  	<!-- <script type='text/javascript' src='jquery-3.1.1.min.js'></script> Using webpack instead -->
+  	<script type='text/javascript' src='ALGO NAME.js'></script>
+    <!-- TODO FIX THIS -->
+  	<script type='text/javascript' src='entry.js'></script>
+  </body>
+</html>
