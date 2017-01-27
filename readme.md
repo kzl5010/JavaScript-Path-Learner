@@ -2,7 +2,7 @@
 
 ### Background
 
-Algorithms Visualization is as the name describes. The primary focus will be path finding using graph algorithms like A\* and Dijkstra's.
+Algorithms Visualization is as the name describes. The primary focus will be path finding using graph algorithms like A\* and BFS.
 
 There should be some variations of certain algorithms included in the above list. The **Functionality & MVP** and **Bonus Features** sections outline the project and future updates.  
 
@@ -10,7 +10,7 @@ There should be some variations of certain algorithms included in the above list
 
 With this Algorithm Visualizer, users will be able to:
 
-- [ ] Choose the endpoint for a "maze" solving algorithms
+- [ ] Choose the startpoint and endpoint for a "maze" solving algorithms
 - [ ] Choose the settings for randomized initial states and characteristics, e.g. weighted vs. unweighted.
 
 In addition, this project will include:
@@ -22,7 +22,7 @@ In addition, this project will include:
 ### Wireframes
 
 This app will consist of a single screen with one or two grids/mazes, and nav links to the Github, LinkedIn,
-and the Description modal.  The controls will include options to change the starting data and allow the user to choose starting and ending points with clicking.  
+and the Description.  The controls will include options to change the starting data and allow the user to choose starting and ending points with clicking.  
 
 ![wireframes](./js-wireframe.png)
 
@@ -71,7 +71,7 @@ In addition to the webpack entry file, there will be four scripts involved in th
 ### Bonus features
 
 Some possible updates are:
-
+- [ ] Add more algorithms like Dijkstra's, Primm's. 
 - [ ] Add their own data to test the algorithms
 - [ ] Add multiple choices for starting states that are interesting
 - [ ] Compare similar algorithms like sorting vs sorting or graph vs graph.

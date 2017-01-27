@@ -42,22 +42,18 @@ export default class Graph {
     let y = node.y;
     let grid = this.grid;
 
-    // West
     if (grid[x - 1] && grid[x - 1][y]) {
       ret.push(grid[x - 1][y]);
     }
 
-    // East
     if (grid[x + 1] && grid[x + 1][y]) {
       ret.push(grid[x + 1][y]);
     }
 
-    // South
     if (grid[x] && grid[x][y - 1]) {
       ret.push(grid[x][y - 1]);
     }
 
-    // North
     if (grid[x] && grid[x][y + 1]) {
       ret.push(grid[x][y + 1]);
     }
@@ -91,9 +87,6 @@ class GridNode {
   };
 
   getCost(fromNeighbor) {
-  // if (fromNeighbor && fromNeighbor.x != this.x && fromNeighbor.y != this.y) {
-  //   return this.cost * 1.41421;
-  //   }
     return this.cost;
   };
 

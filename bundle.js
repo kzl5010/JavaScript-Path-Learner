@@ -54,6 +54,8 @@
 	
 	var _graph2 = _interopRequireDefault(_graph);
 	
+	var _bfs = __webpack_require__(3);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -76,7 +78,7 @@
 	        closest: $nextNode.is("checked")
 	    };
 	
-	    var grid = new GraphSolver($grid, options, _algo.astar.search);
+	    var grid = new GraphSolver($grid, options, _bfs.bfs.search);
 	
 	    $("#generateGrid").click(function () {
 	        grid.initialize();
@@ -330,17 +332,7 @@
 	}
 	
 	var astar = exports.astar = {
-	  /**
-	  * Perform an A* Search on a graph given a start and end node.
-	  * @param {Graph} graph
-	  * @param {GridNode} start
-	  * @param {GridNode} end
-	  * @param {Object} [options]
-	  * @param {bool} [options.closest] Specifies whether to return the
-	             path to the closest node if the target is unreachable.
-	  * @param {Function} [options.heuristic] Heuristic function (see
-	  *          astar.algorithmic).
-	  */
+	
 	  search: function search(graph, start, end, options) {
 	    graph.clearNodes();
 	    options = options || {};
@@ -581,22 +573,18 @@
 	      var y = node.y;
 	      var grid = this.grid;
 	
-	      // West
 	      if (grid[x - 1] && grid[x - 1][y]) {
 	        ret.push(grid[x - 1][y]);
 	      }
 	
-	      // East
 	      if (grid[x + 1] && grid[x + 1][y]) {
 	        ret.push(grid[x + 1][y]);
 	      }
 	
-	      // South
 	      if (grid[x] && grid[x][y - 1]) {
 	        ret.push(grid[x][y - 1]);
 	      }
 	
-	      // North
 	      if (grid[x] && grid[x][y + 1]) {
 	        ret.push(grid[x][y + 1]);
 	      }
@@ -641,9 +629,6 @@
 	  }, {
 	    key: "getCost",
 	    value: function getCost(fromNeighbor) {
-	      // if (fromNeighbor && fromNeighbor.x != this.x && fromNeighbor.y != this.y) {
-	      //   return this.cost * 1.41421;
-	      //   }
 	      return this.cost;
 	    }
 	  }, {
@@ -655,6 +640,83 @@
 
 	  return GridNode;
 	}();
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	function pathTo(end) {
+	  var currentNode = end;
+	  var path = [];
+	  while (currentNode.parent) {
+	    path.unshift(currentNode);
+	    currentNode = currentNode.parent;
+	  }
+	  return path;
+	}
+	
+	var bfs = exports.bfs = {
+	
+	  search: function search(graph, start, end, options) {
+	    graph.clearNodes();
+	    var closest = options.closest || false;
+	
+	    var mySet = new Set();
+	    var myQueue = [];
+	    var closestNode = start; // set the start node to be the closest if required
+	
+	    graph.markVisited(start);
+	
+	    myQueue.push(start);
+	
+	    while (myQueue.length > 0) {
+	      var currentNode = myQueue.shift();
+	
+	      if (currentNode === end) {
+	        return pathTo(currentNode);
+	      }
+	
+	      currentNode.closed = true;
+	
+	      var neighbors = graph.neighbors(currentNode);
+	
+	      for (var i = 0, il = neighbors.length; i < il; ++i) {
+	        var neighbor = neighbors[i];
+	
+	        if (neighbor.closed || neighbor.isWall()) {
+	          continue;
+	        }
+	        var beenVisited = neighbor.visited;
+	
+	        if (!beenVisited) {
+	          myQueue.push(neighbor);
+	          neighbor.visited = true;
+	          neighbor.parent = currentNode;
+	          graph.markVisited(neighbor);
+	        }
+	      }
+	    }
+	
+	    if (closest) {
+	      return pathTo(closestNode);
+	    }
+	
+	    return [];
+	  },
+	  cleanNode: function cleanNode(node) {
+	    node.f = 0;
+	    node.g = 0;
+	    node.h = 0;
+	    node.visited = false;
+	    node.closed = false;
+	    node.parent = null;
+	  }
+	};
 
 /***/ }
 /******/ ]);

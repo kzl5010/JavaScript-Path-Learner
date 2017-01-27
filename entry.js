@@ -1,5 +1,6 @@
 import { astar } from './algo';
 import Graph from './graph';
+import { bfs } from './bfs';
 
 let WALL = 0,
     performance = window.performance;
@@ -19,7 +20,7 @@ $(function() {
         closest: $nextNode.is("checked")
     };
 
-    let grid = new GraphSolver($grid, options, astar.search);
+    let grid = new GraphSolver($grid, options, bfs.search);
 
     $("#generateGrid").click(function() {
         grid.initialize();
