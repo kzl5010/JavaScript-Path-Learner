@@ -50,29 +50,33 @@
 	    		</select>
 
 	    		<br />
-	    		<label for="showAll">Show all tiles searched?</label>
+	    		<label for="showAll">Show all tiles searched?<br/> Run After Search</label>
           <label class="switch">
 	    		  <input type="checkbox" name="showAll" id="showAll" />
             <div class="slider round"></div>
           </label>
 	    		<br />
-	    		<label for="nextNode">Closest Tile on Unsolvable?</label>
+          <br />
+	    		<label for="nextNode">Closest Tile on Unsolvable?<br/>Only on A*</label>
           <label class="switch">
 	    		<input type="checkbox" name="nextNode" id="nextNode" />
           <div class="slider round"></div>
           </label>
+          <br />
 	    		<br />
 	    		<label for="weighted">Weighted Graph? (Default: Unweighted, Must generate new grid)</label>
           <label class="switch">
 	    		<input type="checkbox" name="weighted" id="weighted" />
           <div class="slider round"></div>
           </label>
+          <br />
 	    		<br />
 	    		<label for="displayWeights">Display weight values?</label>
           <label class="switch">
 	    		<input type="checkbox" name="displayWeights" id="displayWeights" />
           <div class="slider round"></div>
           </label>
+          <br />
 	    		<br />
 	    		<input type="button" id="generateGrid" value="New Grid" />
 	    		<fieldset id='weightsKey'>

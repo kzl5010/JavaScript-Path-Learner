@@ -48,8 +48,6 @@ $(function() {
       $description.html(descriptions[$(this).val()]);
       $showAll.prop("checked", false);
       $nextNode.prop("checked", false);
-      $weighted.prop("checked", false);
-      $weightsKey.prop("checked", false);
     });
 
     $WallFreq.change(function() {
