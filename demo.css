@@ -148,13 +148,14 @@ pre span.key {
 	margin-bottom: 25px;
 	padding:5px 0;
 	width:300px;
-	float: left;
+	/*float: left;*/
 }
 #search_grid  {
 	width: 800px;
 	height:800px;
 	/*position: absolute;*/
 	float: right;
+	margin-left: 500px;
 }
 
 .grid_item {

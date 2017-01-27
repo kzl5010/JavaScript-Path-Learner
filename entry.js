@@ -10,6 +10,15 @@ let searches = {
   bfs: bfs
 };
 
+let astar_desc = "A* (star) is a search algorithm that is very popular in pathfinding and graph traversal because of its fast performance and accuracy. It works as a best-first search, solving the path by selecting the lowest cost option among possible paths (constructing a tree of paths one step at a time until a path reaches the endpoint). This version uses the manhattan heuristic";
+
+let bfs_desc = "Breadth-First-Search works by expanding outward in all four directions one step at a time from each node in order of its insertion into a Queue that contains all of the upcoming search targets, continuing until it finds the endpoint. The primary strength of BFS is the simplicity of implementation.";
+
+let descriptions = {
+  astar: astar_desc,
+  bfs: bfs_desc
+};
+
 $(function() {
     let $algoType = $("#algoType");
     let $grid = $("#search_grid");
@@ -18,7 +27,8 @@ $(function() {
     let $showAll = $("#showAll");
     let $nextNode = $("#nextNode");
     let algoType = $algoType.val();
-
+    let $description = $("#description");
+    $description.html(descriptions[algoType]);
     let options = {
         WallFreq: $WallFreq.val(),
         graphSize: $graphSize.val(),
@@ -35,6 +45,11 @@ $(function() {
 
     $algoType.change(function(){
       grid = new GraphSolver($grid, options, searches[$(this).val()].search, searches[$(this).val()]);
+      $description.html(descriptions[$(this).val()]);
+      $showAll.prop("checked", false);
+      $nextNode.prop("checked", false);
+      $weighted.prop("checked", false);
+      $weightsKey.prop("checked", false);
     });
 
     $WallFreq.change(function() {
@@ -186,7 +201,7 @@ class GraphSolver {
               }
 
               if (showAll) {
-                  $(this).html("visited");
+                  // $(this).html("visited");
                   $(this).addClass("visited");
               }
           });
