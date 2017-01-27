@@ -2,7 +2,8 @@ import {astar} from './algo';
 import {bfs} from './bfs';
 
 export default class Graph {
-  constructor(gridIn, options) {
+  constructor(gridIn, algo, options) {
+    this.algo = algo;
     options = options || {};
     this.nodeList = [];
     this.grid = [];
@@ -21,13 +22,13 @@ export default class Graph {
   init() {
     this.visitedNodes = [];
     for (let i = 0; i < this.nodeList.length; i++) {
-      bfs.cleanNode(this.nodeList[i]);
+      this.algo.cleanNode(this.nodeList[i]);
     }
   };
 
   clearNodes() {
     for (let i = 0; i < this.visitedNodes.length; i++) {
-      bfs.cleanNode(this.visitedNodes[i]);
+      this.algo.cleanNode(this.visitedNodes[i]);
     }
     this.visitedNodes = [];
   };

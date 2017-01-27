@@ -5,13 +5,19 @@ import { bfs } from './bfs';
 let WALL = 0;
 let performance = window.performance;
 
-$(function() {
+let searches = {
+  astar: astar,
+  bfs: bfs
+};
 
+$(function() {
+    let $algoType = $("#algoType");
     let $grid = $("#search_grid");
     let $WallFreq = $("#WallFreq");
     let $graphSize = $("#graphSize");
     let $showAll = $("#showAll");
     let $nextNode = $("#nextNode");
+    let algoType = $algoType.val();
 
     let options = {
         WallFreq: $WallFreq.val(),
@@ -20,10 +26,15 @@ $(function() {
         closest: $nextNode.is("checked")
     };
 
-    let grid = new GraphSolver($grid, options, bfs.search);
+
+    let grid = new GraphSolver($grid, options, searches[algoType].search, searches[algoType]);
 
     $("#generateGrid").click(function() {
         grid.initialize();
+    });
+
+    $algoType.change(function(){
+      grid = new GraphSolver($grid, options, searches[$(this).val()].search, searches[$(this).val()]);
     });
 
     $WallFreq.change(function() {
@@ -57,7 +68,8 @@ $(function() {
 let css = { first: "first", end: "end", brick: "brick", path: "path" };
 
 class GraphSolver {
-  constructor($graph, options, implementation) {
+  constructor($graph, options, implementation, algo) {
+    this.algo = algo;
     this.$graph = $graph;
     this.search = implementation;
     this.options = $.extend({WallFreq:0.1, showAll:true, graphSize:10}, options);
@@ -116,7 +128,7 @@ class GraphSolver {
           nodes.push(nodeRow);
       }
 
-      this.graph = new Graph(nodes);
+      this.graph = new Graph(nodes, this.algo);
 
       this.$cells = $graph.find(".grid_item");
       this.$cells.click(function() {

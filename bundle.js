@@ -63,13 +63,19 @@
 	var WALL = 0;
 	var performance = window.performance;
 	
-	$(function () {
+	var searches = {
+	    astar: _algo.astar,
+	    bfs: _bfs.bfs
+	};
 	
+	$(function () {
+	    var $algoType = $("#algoType");
 	    var $grid = $("#search_grid");
 	    var $WallFreq = $("#WallFreq");
 	    var $graphSize = $("#graphSize");
 	    var $showAll = $("#showAll");
 	    var $nextNode = $("#nextNode");
+	    var algoType = $algoType.val();
 	
 	    var options = {
 	        WallFreq: $WallFreq.val(),
@@ -78,10 +84,14 @@
 	        closest: $nextNode.is("checked")
 	    };
 	
-	    var grid = new GraphSolver($grid, options, _bfs.bfs.search);
+	    var grid = new GraphSolver($grid, options, searches[algoType].search, searches[algoType]);
 	
 	    $("#generateGrid").click(function () {
 	        grid.initialize();
+	    });
+	
+	    $algoType.change(function () {
+	        grid = new GraphSolver($grid, options, searches[$(this).val()].search, searches[$(this).val()]);
 	    });
 	
 	    $WallFreq.change(function () {
@@ -114,9 +124,10 @@
 	var css = { first: "first", end: "end", brick: "brick", path: "path" };
 	
 	var GraphSolver = function () {
-	    function GraphSolver($graph, options, implementation) {
+	    function GraphSolver($graph, options, implementation, algo) {
 	        _classCallCheck(this, GraphSolver);
 	
+	        this.algo = algo;
 	        this.$graph = $graph;
 	        this.search = implementation;
 	        this.options = $.extend({ WallFreq: 0.1, showAll: true, graphSize: 10 }, options);
@@ -179,7 +190,7 @@
 	                nodes.push(nodeRow);
 	            }
 	
-	            this.graph = new _graph2.default(nodes);
+	            this.graph = new _graph2.default(nodes, this.algo);
 	
 	            this.$cells = $graph.find(".grid_item");
 	            this.$cells.click(function () {
@@ -528,9 +539,10 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	var Graph = function () {
-	  function Graph(gridIn, options) {
+	  function Graph(gridIn, algo, options) {
 	    _classCallCheck(this, Graph);
 	
+	    this.algo = algo;
 	    options = options || {};
 	    this.nodeList = [];
 	    this.grid = [];
@@ -551,14 +563,14 @@
 	    value: function init() {
 	      this.visitedNodes = [];
 	      for (var i = 0; i < this.nodeList.length; i++) {
-	        _bfs.bfs.cleanNode(this.nodeList[i]);
+	        this.algo.cleanNode(this.nodeList[i]);
 	      }
 	    }
 	  }, {
 	    key: 'clearNodes',
 	    value: function clearNodes() {
 	      for (var i = 0; i < this.visitedNodes.length; i++) {
-	        _bfs.bfs.cleanNode(this.visitedNodes[i]);
+	        this.algo.cleanNode(this.visitedNodes[i]);
 	      }
 	      this.visitedNodes = [];
 	    }
