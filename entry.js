@@ -7,11 +7,11 @@ let performance = window.performance;
 
 $(function() {
 
-    let $grid = $("#search_grid"),
-        $WallFreq = $("#WallFreq"),
-        $graphSize = $("#graphSize"),
-        $showAll = $("#showAll"),
-        $nextNode = $("#nextNode");
+    let $grid = $("#search_grid");
+    let $WallFreq = $("#WallFreq");
+    let $graphSize = $("#graphSize");
+    let $showAll = $("#showAll");
+    let $nextNode = $("#nextNode");
 
     let options = {
         WallFreq: $WallFreq.val(),
@@ -20,7 +20,7 @@ $(function() {
         closest: $nextNode.is("checked")
     };
 
-    let grid = new GraphSolver($grid, options, astar.search);
+    let grid = new GraphSolver($grid, options, bfs.search);
 
     $("#generateGrid").click(function() {
         grid.initialize();

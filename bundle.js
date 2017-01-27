@@ -65,11 +65,11 @@
 	
 	$(function () {
 	
-	    var $grid = $("#search_grid"),
-	        $WallFreq = $("#WallFreq"),
-	        $graphSize = $("#graphSize"),
-	        $showAll = $("#showAll"),
-	        $nextNode = $("#nextNode");
+	    var $grid = $("#search_grid");
+	    var $WallFreq = $("#WallFreq");
+	    var $graphSize = $("#graphSize");
+	    var $showAll = $("#showAll");
+	    var $nextNode = $("#nextNode");
 	
 	    var options = {
 	        WallFreq: $WallFreq.val(),
@@ -78,7 +78,7 @@
 	        closest: $nextNode.is("checked")
 	    };
 	
-	    var grid = new GraphSolver($grid, options, _algo.astar.search);
+	    var grid = new GraphSolver($grid, options, _bfs.bfs.search);
 	
 	    $("#generateGrid").click(function () {
 	        grid.initialize();
@@ -682,7 +682,9 @@
 	      if (currentNode === end) {
 	        return pathTo(currentNode);
 	      }
-	
+	      if (currentNode === undefined) {
+	        return [];
+	      }
 	      currentNode.closed = true;
 	
 	      var neighbors = graph.neighbors(currentNode);
@@ -711,6 +713,9 @@
 	    return [];
 	  },
 	  cleanNode: function cleanNode(node) {
+	    if (node === undefined) {
+	      return;
+	    }
 	    node.visited = false;
 	    node.closed = false;
 	    node.parent = null;

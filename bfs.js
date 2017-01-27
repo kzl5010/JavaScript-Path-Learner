@@ -28,7 +28,9 @@ export const bfs = {
       if (currentNode === end) {
         return pathTo(currentNode);
       }
-
+      if (currentNode === undefined) {
+        return [];
+      }
       currentNode.closed = true;
 
       let neighbors = graph.neighbors(currentNode);
@@ -57,6 +59,9 @@ export const bfs = {
     return [];
   },
   cleanNode: function(node) {
+    if (node === undefined) {
+      return;
+    }
     node.visited = false;
     node.closed = false;
     node.parent = null;
