@@ -1,14 +1,18 @@
+var path = require("path");
+
 module.exports = {
-  entry: './entry.js',
+
+  context: __dirname,
+  entry: "./entry.js",
   output: {
-    path: './',
-    filename: 'bundle.js',
+    path: "./",
+    filename: "bundle.js"
   },
   module: {
     loaders: [
       {
         test: [/\.jsx?$/, /\.js?$/],
-        exclude: /(node_modules)/,
+        exclude: /(node_modules|bower_components)/,
         loader: 'babel',
         query: {
           presets: ['es2015']
@@ -16,8 +20,8 @@ module.exports = {
       }
     ]
   },
-  devtool: 'source-map',
+  devtool: 'source-maps',
   resolve: {
-    extensions: ['', '.js']
+    extensions: ["", ".js", ".jsx" ]
   }
 };

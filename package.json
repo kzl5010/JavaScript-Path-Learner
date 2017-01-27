@@ -2,7 +2,7 @@
   "name": "js-project",
   "version": "1.0.0",
   "description": "### Background",
-  "main": "index.js",
+  "main": "entry.js",
   "scripts": {
     "webpack": "webpack"
   },
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/kzl5010/js-project#readme",
   "dependencies": {
     "babel": "^6.5.2",
+    "babel-cli": "^6.22.2",
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.22.0",

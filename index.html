@@ -3,14 +3,22 @@
   <head>
     <meta charset="utf-8">
     <title>A*maker</title>
+    <div id="header">	<link rel="stylesheet" type="text/css" href="demo.css" />
   </head>
   <body>
-    <div id="header">
-      <h1>Javascript Maze Solve</h1>
-      <div class="links">
-          <!-- <a href=''>Github</a>
-          <a href=''>LinkedIn</a>  -->
-      </div>
+      <header>
+        <div class="header-nav">
+          <h1>Javascript Path Solver</h1>
+          <ul>
+            <li>
+              <a href=''>Github</a>
+            </li>
+            <li>
+              <a href=''>LinkedIn</a>
+            </li>
+          </ul>
+        </div>
+      </header>
   	</div>
 
   	<div id="content">
@@ -31,26 +39,34 @@
 	    			<option value="30">30x30</option>
 	    			<option value="40">40x40</option>
 	    			<option value="50" selected="selected">50x50</option>
+            <option value="75">75x75</option>
 	    			<option value="100">100x100</option>
-	    			<option value="150">150x150</option>
-	    			<option value="200">200x200</option>
 	    		</select>
 
 	    		<br />
 	    		<label for="showAll">Show all tiles searched?</label>
-	    		<input type="checkbox" name="showAll" id="showAll" />
-	    		<br />
-	    		<label for="Diagonal">Allow diagonal movement?</label>
-	    		<input type="checkbox" name="Diagonal" id="Diagonal" />
+          <label class="switch">
+	    		  <input type="checkbox" name="showAll" id="showAll" />
+            <div class="slider round"></div>
+          </label>
 	    		<br />
 	    		<label for="nextNode">Closest node if target unreachable?</label>
+          <label class="switch">
 	    		<input type="checkbox" name="nextNode" id="nextNode" />
+          <div class="slider round"></div>
+          </label>
 	    		<br />
-	    		<label for="weighted">Add random weights?</label>
+	    		<label for="weighted">Weighted Graph? (Default: Unweighted, Must generate new grid)</label>
+          <label class="switch">
 	    		<input type="checkbox" name="weighted" id="weighted" />
+          <div class="slider round"></div>
+          </label>
 	    		<br />
 	    		<label for="displayWeights">Display weight values?</label>
+          <label class="switch">
 	    		<input type="checkbox" name="displayWeights" id="displayWeights" />
+          <div class="slider round"></div>
+          </label>
 	    		<br />
 	    		<input type="button" id="generateGrid" value="New Grid" />
 	    		<fieldset id='weightsKey'>
@@ -58,9 +74,9 @@
 	    			<div>
 	    			<span class="grid_item weight1" style="width: 10px; height: 14.25px;" id="keyWeight3"></span> Weight of 1 </div>
 	    			<div>
-	    			<span class="grid_item weight3" style="width: 10px; height: 10px;" id="keyWeight3"></span> Weight of 2 </div>
+	    			<span class="grid_item weight6" style="width: 10px; height: 10px;" id="keyWeight3"></span> Weight of 5 </div>
 	    			<div>
-	    			<span class="grid_item weight5" style="width: 10px; height: 10px;" id="keyWeight3"></span> Weight of 5 </div>
+	    			<span class="grid_item weight11" style="width: 10px; height: 10px;" id="keyWeight3"></span> Weight of 11 </div>
 	    			<div>
 	    			<span class="grid_item wall" style="width: 10px; height: 10px;" id="keyWall"></span> Wall </div>
 	    		</fieldset>
@@ -75,9 +91,9 @@
     </div>
   	<div id="footer"></div>
 
-  	<!-- <script type='text/javascript' src='jquery-3.1.1.min.js'></script> Using webpack instead -->
-  	<script type='text/javascript' src='ALGO NAME.js'></script>
+  	<script type='text/javascript' src='jquery-3.1.1.min.js'></script>
+  	<!-- <script type='text/javascript' src='ALGO NAME.js'></script> -->
     <!-- TODO FIX THIS -->
-  	<script type='text/javascript' src='entry.js'></script>
+  	<script type='text/javascript' src='bundle.js'></script>
   </body>
 </html>
