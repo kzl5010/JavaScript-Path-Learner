@@ -9,18 +9,18 @@ $(function() {
 
     let $grid = $("#search_grid"),
         $WallFreq = $("#WallFreq"),
-        $GridSize = $("#GridSize"),
+        $graphSize = $("#graphSize"),
         $showAll = $("#showAll"),
         $nextNode = $("#nextNode");
 
     let options = {
         WallFreq: $WallFreq.val(),
-        gridSize: $GridSize.val(),
+        graphSize: $graphSize.val(),
         showAll: $showAll.is("checked"),
         closest: $nextNode.is("checked")
     };
 
-    let grid = new GraphSolver($grid, options, bfs.search);
+    let grid = new GraphSolver($grid, options, astar.search);
 
     $("#generateGrid").click(function() {
         grid.initialize();
@@ -31,8 +31,8 @@ $(function() {
         grid.initialize();
     });
 
-    $GridSize.change(function() {
-        grid.setOption({gridSize: $(this).val()});
+    $graphSize.change(function() {
+        grid.setOption({graphSize: $(this).val()});
         grid.initialize();
     });
 
@@ -54,13 +54,13 @@ $(function() {
 
 });
 
-let css = { first: "first", end: "end", wall: "wall", active: "active" };
+let css = { first: "first", end: "end", brick: "brick", path: "path" };
 
 class GraphSolver {
   constructor($graph, options, implementation) {
     this.$graph = $graph;
     this.search = implementation;
-    this.options = $.extend({WallFreq:0.1, showAll:true, gridSize:10}, options);
+    this.options = $.extend({WallFreq:0.1, showAll:true, graphSize:10}, options);
     this.initialize();
   }
   setOption(option) {
@@ -75,17 +75,17 @@ class GraphSolver {
 
       $graph.empty();
 
-      let cellWidth = ($graph.width()/this.options.gridSize)-2; // -2 for border
-      let cellHeight = ($graph.height()/this.options.gridSize)-2;
-      let $cellTemplate = $("<span />").addClass("grid_item").width(cellWidth).height(cellHeight);
+      let unitWidth = ($graph.width()/this.options.graphSize)-2;
+      let unitHeight = ($graph.height()/this.options.graphSize)-2;
+      let $cellTemplate = $("<span />").addClass("grid_item").width(unitWidth).height(unitHeight);
       this.startSet = false;
 
-      for(let x = 0; x < this.options.gridSize; x++) {
+      for(let x = 0; x < this.options.graphSize; x++) {
           let $row = $("<div class='clear' />"),
               nodeRow = [],
               gridRow = [];
 
-          for(let y = 0; y < this.options.gridSize; y++) {
+          for(let y = 0; y < this.options.graphSize; y++) {
               let id = "cell_"+x+"_"+y,
                   $cell = $cellTemplate.clone();
               $cell.attr("id", id).attr("x", x).attr("y", y);
@@ -95,7 +95,7 @@ class GraphSolver {
               let isWall = Math.floor(Math.random()*(1/that.options.WallFreq));
               if(isWall === 0) {
                   nodeRow.push(WALL);
-                  $cell.addClass(css.wall);
+                  $cell.addClass(css.brick);
               }
               else  {
                   let cell_cost = ($("#weighted").prop("checked") ? (Math.floor(Math.random() * 3)) * 5 + 1 : 1);
@@ -125,9 +125,9 @@ class GraphSolver {
   };
   chosenNode($end) {
     $end.removeClass("visited")
-    let end = this.nodeFromElement($end);
+    let end = this.findNode($end);
 
-    if($end.hasClass(css.wall) || $end.hasClass(css.first)) {
+    if($end.hasClass(css.brick) || $end.hasClass(css.first)) {
         return;
     }
     if (!this.startSet ) {
@@ -138,9 +138,10 @@ class GraphSolver {
 
     this.$cells.removeClass(css.end);
     this.$cells.removeClass("visited");
+    this.$cells.removeClass(css.path);
     $end.addClass(css.end);
     let $first = this.$cells.filter("." + css.first),
-        first = this.nodeFromElement($first);
+        first = this.findNode($first);
 
     let sTime = performance ? performance.now() : new Date().getTime();
 
@@ -156,8 +157,9 @@ class GraphSolver {
     }
     else {
         $("#message").text("search took " + duration + "ms.");
-        this.animatePath(path);
+        this.traceRoute(path);
         this.showAllVisited();
+
     }
   };
   showAllVisited() {
@@ -165,7 +167,7 @@ class GraphSolver {
       let that = this;
       if(this.options.showAll) {
           that.$cells.each(function() {
-              let node = that.nodeFromElement($(this)),
+              let node = that.findNode($(this)),
                   showAll = false;
               if (node.visited) {
                   showAll = true;
@@ -178,7 +180,7 @@ class GraphSolver {
           });
       }
   };
-  nodeFromElement($cell) {
+  findNode($cell) {
     if ($cell.length === 0) {
       return;
     }
@@ -191,7 +193,7 @@ class GraphSolver {
       this.$cells.removeClass(css.end);
       this.startSet = false;
   };
-  animatePath(path) {
+  traceRoute(path) {
       let grid = this.grid,
           timeout = 1000 / grid.length,
           elementFromNode = function(node) {
@@ -203,7 +205,7 @@ class GraphSolver {
           if(i >= path.length) {
               return setStartClass(path, i);
           }
-          // elementFromNode(path[i]).removeClass(css.active);
+          // elementFromNode(path[i]).removeClass(css.path);
           setTimeout(function() {
               removeClass(path, i+1);
           }, timeout*path[i].getCost());
@@ -216,10 +218,10 @@ class GraphSolver {
           }
       };
       let addClass = function(path, i) {
-          if(i >= path.length) { // Finished showing path, now remove
+          if(i >= path.length) {
               return removeClass(path, 0);
           }
-          elementFromNode(path[i]).addClass(css.active);
+          elementFromNode(path[i]).addClass(css.path);
           setTimeout(function() {
               addClass(path, i+1);
           }, timeout*path[i].getCost());

@@ -67,18 +67,18 @@
 	
 	    var $grid = $("#search_grid"),
 	        $WallFreq = $("#WallFreq"),
-	        $GridSize = $("#GridSize"),
+	        $graphSize = $("#graphSize"),
 	        $showAll = $("#showAll"),
 	        $nextNode = $("#nextNode");
 	
 	    var options = {
 	        WallFreq: $WallFreq.val(),
-	        gridSize: $GridSize.val(),
+	        graphSize: $graphSize.val(),
 	        showAll: $showAll.is("checked"),
 	        closest: $nextNode.is("checked")
 	    };
 	
-	    var grid = new GraphSolver($grid, options, _bfs.bfs.search);
+	    var grid = new GraphSolver($grid, options, _algo.astar.search);
 	
 	    $("#generateGrid").click(function () {
 	        grid.initialize();
@@ -89,8 +89,8 @@
 	        grid.initialize();
 	    });
 	
-	    $GridSize.change(function () {
-	        grid.setOption({ gridSize: $(this).val() });
+	    $graphSize.change(function () {
+	        grid.setOption({ graphSize: $(this).val() });
 	        grid.initialize();
 	    });
 	
@@ -111,7 +111,7 @@
 	    });
 	});
 	
-	var css = { first: "first", end: "end", wall: "wall", active: "active" };
+	var css = { first: "first", end: "end", brick: "brick", path: "path" };
 	
 	var GraphSolver = function () {
 	    function GraphSolver($graph, options, implementation) {
@@ -119,7 +119,7 @@
 	
 	        this.$graph = $graph;
 	        this.search = implementation;
-	        this.options = $.extend({ WallFreq: 0.1, showAll: true, gridSize: 10 }, options);
+	        this.options = $.extend({ WallFreq: 0.1, showAll: true, graphSize: 10 }, options);
 	        this.initialize();
 	    }
 	
@@ -139,17 +139,17 @@
 	
 	            $graph.empty();
 	
-	            var cellWidth = $graph.width() / this.options.gridSize - 2; // -2 for border
-	            var cellHeight = $graph.height() / this.options.gridSize - 2;
-	            var $cellTemplate = $("<span />").addClass("grid_item").width(cellWidth).height(cellHeight);
+	            var unitWidth = $graph.width() / this.options.graphSize - 2;
+	            var unitHeight = $graph.height() / this.options.graphSize - 2;
+	            var $cellTemplate = $("<span />").addClass("grid_item").width(unitWidth).height(unitHeight);
 	            this.startSet = false;
 	
-	            for (var x = 0; x < this.options.gridSize; x++) {
+	            for (var x = 0; x < this.options.graphSize; x++) {
 	                var $row = $("<div class='clear' />"),
 	                    nodeRow = [],
 	                    gridRow = [];
 	
-	                for (var y = 0; y < this.options.gridSize; y++) {
+	                for (var y = 0; y < this.options.graphSize; y++) {
 	                    var id = "cell_" + x + "_" + y,
 	                        $cell = $cellTemplate.clone();
 	                    $cell.attr("id", id).attr("x", x).attr("y", y);
@@ -159,7 +159,7 @@
 	                    var isWall = Math.floor(Math.random() * (1 / that.options.WallFreq));
 	                    if (isWall === 0) {
 	                        nodeRow.push(WALL);
-	                        $cell.addClass(css.wall);
+	                        $cell.addClass(css.brick);
 	                    } else {
 	                        var cell_cost = $("#weighted").prop("checked") ? Math.floor(Math.random() * 3) * 5 + 1 : 1;
 	                        nodeRow.push(cell_cost);
@@ -190,9 +190,9 @@
 	        key: 'chosenNode',
 	        value: function chosenNode($end) {
 	            $end.removeClass("visited");
-	            var end = this.nodeFromElement($end);
+	            var end = this.findNode($end);
 	
-	            if ($end.hasClass(css.wall) || $end.hasClass(css.first)) {
+	            if ($end.hasClass(css.brick) || $end.hasClass(css.first)) {
 	                return;
 	            }
 	            if (!this.startSet) {
@@ -203,9 +203,10 @@
 	
 	            this.$cells.removeClass(css.end);
 	            this.$cells.removeClass("visited");
+	            this.$cells.removeClass(css.path);
 	            $end.addClass(css.end);
 	            var $first = this.$cells.filter("." + css.first),
-	                first = this.nodeFromElement($first);
+	                first = this.findNode($first);
 	
 	            var sTime = performance ? performance.now() : new Date().getTime();
 	
@@ -220,7 +221,7 @@
 	                this.noSolution();
 	            } else {
 	                $("#message").text("search took " + duration + "ms.");
-	                this.animatePath(path);
+	                this.traceRoute(path);
 	                this.showAllVisited();
 	            }
 	        }
@@ -231,7 +232,7 @@
 	            var that = this;
 	            if (this.options.showAll) {
 	                that.$cells.each(function () {
-	                    var node = that.nodeFromElement($(this)),
+	                    var node = that.findNode($(this)),
 	                        showAll = false;
 	                    if (node.visited) {
 	                        showAll = true;
@@ -245,8 +246,8 @@
 	            }
 	        }
 	    }, {
-	        key: 'nodeFromElement',
-	        value: function nodeFromElement($cell) {
+	        key: 'findNode',
+	        value: function findNode($cell) {
 	            if ($cell.length === 0) {
 	                return;
 	            }
@@ -261,8 +262,8 @@
 	            this.startSet = false;
 	        }
 	    }, {
-	        key: 'animatePath',
-	        value: function animatePath(path) {
+	        key: 'traceRoute',
+	        value: function traceRoute(path) {
 	            var grid = this.grid,
 	                timeout = 1000 / grid.length,
 	                elementFromNode = function elementFromNode(node) {
@@ -274,7 +275,7 @@
 	                if (i >= path.length) {
 	                    return setStartClass(path, i);
 	                }
-	                // elementFromNode(path[i]).removeClass(css.active);
+	                // elementFromNode(path[i]).removeClass(css.path);
 	                setTimeout(function () {
 	                    removeClass(path, i + 1);
 	                }, timeout * path[i].getCost());
@@ -288,10 +289,9 @@
 	            };
 	            var addClass = function addClass(path, i) {
 	                if (i >= path.length) {
-	                    // Finished showing path, now remove
 	                    return removeClass(path, 0);
 	                }
-	                elementFromNode(path[i]).addClass(css.active);
+	                elementFromNode(path[i]).addClass(css.path);
 	                setTimeout(function () {
 	                    addClass(path, i + 1);
 	                }, timeout * path[i].getCost());
@@ -513,7 +513,7 @@
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -522,6 +522,8 @@
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _algo = __webpack_require__(1);
+	
+	var _bfs = __webpack_require__(3);
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -545,28 +547,28 @@
 	  }
 	
 	  _createClass(Graph, [{
-	    key: "init",
+	    key: 'init',
 	    value: function init() {
 	      this.visitedNodes = [];
 	      for (var i = 0; i < this.nodeList.length; i++) {
-	        _algo.astar.cleanNode(this.nodeList[i]);
+	        _bfs.bfs.cleanNode(this.nodeList[i]);
 	      }
 	    }
 	  }, {
-	    key: "clearNodes",
+	    key: 'clearNodes',
 	    value: function clearNodes() {
 	      for (var i = 0; i < this.visitedNodes.length; i++) {
-	        _algo.astar.cleanNode(this.visitedNodes[i]);
+	        _bfs.bfs.cleanNode(this.visitedNodes[i]);
 	      }
 	      this.visitedNodes = [];
 	    }
 	  }, {
-	    key: "markVisited",
+	    key: 'markVisited',
 	    value: function markVisited(node) {
 	      this.visitedNodes.push(node);
 	    }
 	  }, {
-	    key: "neighbors",
+	    key: 'neighbors',
 	    value: function neighbors(node) {
 	      var ret = [];
 	      var x = node.x;
@@ -591,7 +593,7 @@
 	      return ret;
 	    }
 	  }, {
-	    key: "toString",
+	    key: 'toString',
 	    value: function toString() {
 	      var graphString = [];
 	      var nodes = this.grid;
@@ -622,17 +624,17 @@
 	  }
 	
 	  _createClass(GridNode, [{
-	    key: "toString",
+	    key: 'toString',
 	    value: function toString() {
 	      return "[" + this.x + " " + this.y + "]";
 	    }
 	  }, {
-	    key: "getCost",
+	    key: 'getCost',
 	    value: function getCost(fromNeighbor) {
 	      return this.cost;
 	    }
 	  }, {
-	    key: "isWall",
+	    key: 'isWall',
 	    value: function isWall() {
 	      return this.cost === 0;
 	    }
