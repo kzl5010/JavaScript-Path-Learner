@@ -169,6 +169,10 @@ pre span.key {
 .grid_item.weight1 {
   background-color: #ffffff;
 }
+
+.grid_item.weight1.visited {
+	background-color: red;
+}
 .grid_item.weight6 {
   background-color: #D6EAFF;
 }

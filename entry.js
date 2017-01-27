@@ -167,11 +167,12 @@ class GraphSolver {
               let node = that.nodeFromElement($(this)),
                   showAll = false;
               if (node.visited) {
-                  showAll = "F: " + node.f + "<br />G: " + node.g + "<br />H: " + node.h;
+                  showAll = true;
               }
 
               if (showAll) {
-                  $(this).html(showAll);
+                  $(this).html("visited");
+                  $(this).addClass("visited");
               }
           });
       }
