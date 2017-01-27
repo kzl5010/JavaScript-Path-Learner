@@ -60,8 +60,8 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var WALL = 0,
-	    performance = window.performance;
+	var WALL = 0;
+	var performance = window.performance;
 	
 	$(function () {
 	
@@ -111,7 +111,7 @@
 	    });
 	});
 	
-	var css = { start: "start", finish: "finish", wall: "wall", active: "active" };
+	var css = { first: "first", end: "end", wall: "wall", active: "active" };
 	
 	var GraphSolver = function () {
 	    function GraphSolver($graph, options, implementation) {
@@ -181,7 +181,6 @@
 	
 	            this.graph = new _graph2.default(nodes);
 	
-	            // bind cell event, set start/wall positions
 	            this.$cells = $graph.find(".grid_item");
 	            this.$cells.click(function () {
 	                that.chosenNode($(this));
@@ -190,25 +189,27 @@
 	    }, {
 	        key: 'chosenNode',
 	        value: function chosenNode($end) {
+	            $end.removeClass("visited");
 	            var end = this.nodeFromElement($end);
 	
-	            if ($end.hasClass(css.wall) || $end.hasClass(css.start)) {
+	            if ($end.hasClass(css.wall) || $end.hasClass(css.first)) {
 	                return;
 	            }
 	            if (!this.startSet) {
-	                $end.addClass(css.start);
+	                $end.addClass(css.first);
 	                this.startSet = true;
 	                return;
 	            }
 	
-	            this.$cells.removeClass(css.finish);
-	            $end.addClass(css.finish);
-	            var $start = this.$cells.filter("." + css.start),
-	                start = this.nodeFromElement($start);
+	            this.$cells.removeClass(css.end);
+	            this.$cells.removeClass("visited");
+	            $end.addClass(css.end);
+	            var $first = this.$cells.filter("." + css.first),
+	                first = this.nodeFromElement($first);
 	
 	            var sTime = performance ? performance.now() : new Date().getTime();
 	
-	            var path = this.search(this.graph, start, end, {
+	            var path = this.search(this.graph, first, end, {
 	                closest: this.options.closest
 	            });
 	            var fTime = performance ? performance.now() : new Date().getTime(),
@@ -219,8 +220,8 @@
 	                this.noSolution();
 	            } else {
 	                $("#message").text("search took " + duration + "ms.");
-	                this.showAllVisited();
 	                this.animatePath(path);
+	                this.showAllVisited();
 	            }
 	        }
 	    }, {
@@ -255,8 +256,8 @@
 	        key: 'noSolution',
 	        value: function noSolution() {
 	            var $graph = this.$graph;
-	            this.$cells.removeClass(css.start);
-	            this.$cells.removeClass(css.finish);
+	            this.$cells.removeClass(css.first);
+	            this.$cells.removeClass(css.end);
 	            this.startSet = false;
 	        }
 	    }, {
@@ -269,21 +270,19 @@
 	            };
 	
 	            var that = this;
-	            // will add start class if final
 	            var removeClass = function removeClass(path, i) {
 	                if (i >= path.length) {
-	                    // finished removing path, set start positions
 	                    return setStartClass(path, i);
 	                }
-	                elementFromNode(path[i]).removeClass(css.active);
+	                // elementFromNode(path[i]).removeClass(css.active);
 	                setTimeout(function () {
 	                    removeClass(path, i + 1);
 	                }, timeout * path[i].getCost());
 	            };
 	            var setStartClass = function setStartClass(path, i) {
 	                if (i === path.length) {
-	                    that.$graph.find("." + css.start).removeClass(css.start);
-	                    // elementFromNode(path[i-1]).addClass(css.start);
+	                    that.$graph.find("." + css.first).removeClass(css.first);
+	                    // elementFromNode(path[i-1]).addClass(css.first);
 	                    that.startSet = false;
 	                }
 	            };
@@ -299,8 +298,8 @@
 	            };
 	
 	            addClass(path, 0);
-	            this.$graph.find("." + css.start).removeClass(css.start);
-	            this.$graph.find("." + css.finish).removeClass(css.finish);
+	            this.$graph.find("." + css.first).removeClass(css.first);
+	            this.$graph.find("." + css.end).removeClass(css.end);
 	        }
 	    }]);
 

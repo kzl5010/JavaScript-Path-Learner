@@ -148,6 +148,7 @@ pre span.key {
 	margin-bottom: 25px;
 	padding:5px 0;
 	width:300px;
+	float: left; 
 }
 #search_grid  {
 	width: 800px;
@@ -164,7 +165,7 @@ pre span.key {
 	font-size:10px;
 }
 .grid_item.wall {
-  background-color: #000000;
+  background-color: gray;
 }
 .grid_item.weight1 {
   background-color: #ffffff;
@@ -179,11 +180,11 @@ pre span.key {
 .grid_item.weight11 {
   background-color: #ABD1FF;
 }
-.grid_item.start {
-	background-color: yellow;
+.grid_item.first {
+	background-color: blue;
 }
 .grid_item.active {
-	background-color: yellow;
+	background-color: blue;
 }
 
 #weightsKey {

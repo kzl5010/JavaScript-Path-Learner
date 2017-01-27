@@ -2,8 +2,8 @@ import { astar } from './algo';
 import Graph from './graph';
 import { bfs } from './bfs';
 
-let WALL = 0,
-    performance = window.performance;
+let WALL = 0;
+let performance = window.performance;
 
 $(function() {
 
@@ -54,7 +54,7 @@ $(function() {
 
 });
 
-let css = { start: "start", finish: "finish", wall: "wall", active: "active" };
+let css = { first: "first", end: "end", wall: "wall", active: "active" };
 
 class GraphSolver {
   constructor($graph, options, implementation) {
@@ -118,32 +118,33 @@ class GraphSolver {
 
       this.graph = new Graph(nodes);
 
-      // bind cell event, set start/wall positions
       this.$cells = $graph.find(".grid_item");
       this.$cells.click(function() {
           that.chosenNode($(this));
       });
   };
   chosenNode($end) {
+    $end.removeClass("visited")
     let end = this.nodeFromElement($end);
 
-    if($end.hasClass(css.wall) || $end.hasClass(css.start)) {
+    if($end.hasClass(css.wall) || $end.hasClass(css.first)) {
         return;
     }
     if (!this.startSet ) {
-      $end.addClass(css.start);
+      $end.addClass(css.first);
       this.startSet = true;
       return;
     }
 
-    this.$cells.removeClass(css.finish);
-    $end.addClass(css.finish);
-    let $start = this.$cells.filter("." + css.start),
-        start = this.nodeFromElement($start);
+    this.$cells.removeClass(css.end);
+    this.$cells.removeClass("visited");
+    $end.addClass(css.end);
+    let $first = this.$cells.filter("." + css.first),
+        first = this.nodeFromElement($first);
 
     let sTime = performance ? performance.now() : new Date().getTime();
 
-    let path = this.search(this.graph, start, end, {
+    let path = this.search(this.graph, first, end, {
         closest: this.options.closest
     });
     let fTime = performance ? performance.now() : new Date().getTime(),
@@ -155,8 +156,8 @@ class GraphSolver {
     }
     else {
         $("#message").text("search took " + duration + "ms.");
-        this.showAllVisited();
         this.animatePath(path);
+        this.showAllVisited();
     }
   };
   showAllVisited() {
@@ -186,8 +187,8 @@ class GraphSolver {
   };
   noSolution() {
       let $graph = this.$graph;
-      this.$cells.removeClass(css.start);
-      this.$cells.removeClass(css.finish);
+      this.$cells.removeClass(css.first);
+      this.$cells.removeClass(css.end);
       this.startSet = false;
   };
   animatePath(path) {
@@ -198,20 +199,19 @@ class GraphSolver {
       };
 
       let that = this;
-      // will add start class if final
       let removeClass = function(path, i) {
-          if(i >= path.length) { // finished removing path, set start positions
+          if(i >= path.length) {
               return setStartClass(path, i);
           }
-          elementFromNode(path[i]).removeClass(css.active);
+          // elementFromNode(path[i]).removeClass(css.active);
           setTimeout(function() {
               removeClass(path, i+1);
           }, timeout*path[i].getCost());
       };
       let setStartClass = function(path, i) {
           if(i === path.length) {
-              that.$graph.find("." + css.start).removeClass(css.start);
-              // elementFromNode(path[i-1]).addClass(css.start);
+              that.$graph.find("." + css.first).removeClass(css.first);
+              // elementFromNode(path[i-1]).addClass(css.first);
               that.startSet = false;
           }
       };
@@ -226,7 +226,7 @@ class GraphSolver {
       };
 
       addClass(path, 0);
-      this.$graph.find("." + css.start).removeClass(css.start);
-      this.$graph.find("." + css.finish).removeClass(css.finish);
+      this.$graph.find("." + css.first).removeClass(css.first);
+      this.$graph.find("." + css.end).removeClass(css.end);
   };
 }
