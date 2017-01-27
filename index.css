@@ -11,14 +11,14 @@ body {
 header {
   font-family: 'Pacifico', cursive;
   color: white;
-  background: green;
+  background: lightblue;
   width: 100%;
   margin: 0;
 }
 
 .header-nav {
   width: 100vw;
-	height: 75px;
+	height: 55px;
   /*// margin: 0;*/
   display: flex;
   justify-content:space-between;
@@ -26,8 +26,6 @@ header {
 }
 
 header a {
-	margin-right: 50px;
-	margin-left: 30px;
 }
 
 ul {
@@ -38,18 +36,25 @@ ul {
 }
 
 h2 {
+	margin: 0;
     font-weight:normal;
 }
-.links {
+
+/*.links {
     clear:both;
     background: rgba(0, 0, 0, .1);
     padding: 4px;
     padding-left: 20px;
 	padding-bottom:5px;
-}
+}*/
 .links a {
+		height: 30px;
     padding: 3px;
     color: #339;
+}
+
+i {
+	height: 30px;
 }
 .buttons {
     float:right;
@@ -70,9 +75,17 @@ h2 {
     border:none;
 }
 #content {
-	margin: 0 auto;
-	width: 300px;
+	display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 5px;
+  /*padding: 10px;*/
+  height: 790px;
+	width: 100%;
+	/*overflow: scroll;*/
+	box-sizing: border-box;
 }
+
 #header, #footer {
 	background:#ddf;
 }
@@ -80,14 +93,18 @@ h2 {
     margin:0;
     float:left;
     margin-bottom: 10px;
-    margin-left: 5px;
+    margin-left: 650px;
 }
 #header {
-	border-bottom:solid 8px #333;
-	margin-bottom:15px;
+	/*border-bottom:solid 8px #333;*/
+	margin-bottom:0px;
     position: relative;
 }
 #header a, #footer a {
+
+	margin-right: 50px;
+	margin-left: 30px;
+	height: 50px;
 	font-size:.9em;
     font-family: Georgia;
 }
@@ -99,7 +116,7 @@ ul.basics li {
 }
 .result-panel {
 	width:80%;
-	padding:10px;
+	padding:5px;
 	margin:10px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
@@ -136,20 +153,35 @@ pre span.key {
 	font-size:1.2em;
 }
 #controls {
-	border-left:none;
-	border-right:none;
-	margin-bottom: 25px;
-	padding:5px 0;
-	width:300px;
-	/*float: left;*/
+	display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin-right: 20px;
+
+  padding: 30px;
+  font-family: "VT323";
+  color: #68AB63;
+
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
+
+#main {
+width: 800px;
+border-radius: 10px;
+padding: 20px;
+background-color: #FFFFFF;
+box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
 #search_grid  {
 	width: 800px;
-	height:800px;
+	height:700px;
 	/*position: absolute;*/
 	float: right;
-	margin-left: 500px;
 }
+
 
 .grid_item {
 	display: block;
@@ -188,6 +220,16 @@ pre span.key {
 }
 .grid_item.path {
 	background-color: blue;
+}
+
+#description {
+	margin-left: 15px;
+}
+
+h4 {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 555px;
 }
 
 #weightsKey {
@@ -250,4 +292,9 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.Instructions {
+	width: 1200px;
+	margin-left: 200px;
 }

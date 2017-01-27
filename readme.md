@@ -5,15 +5,16 @@
 ![Home page](docs/images/home.png)
 
 ## Features
-- [x] Generate mazes
+- [x] Generate mazes and choose size
 - [x] Set start and end points
-- [x] Choose algorithm to be ran
-- [x] An instructions tooltip
+- [x] Choose algorithm to visualize
+- [x] Instructions
+- [x] Specify weighted vs. unweighted
 
 ## Design
-This visualizer uses a simple grid system where a starting block is placed at the `(0, 0)` position. To run a visualization, the user just has to click an open square on the grid and the algorithm will run.
+This visualizer features a tailored random grid. To run an algorithm the user chooses start and end points after specifying the details of the grid.
 
-![AStar with path](docs/images/astar-path.png)
+<!-- ![AStar with path](docs/images/astar-path.png) -->
 
 The side bar contains simple intuitive instructions, options for the algorithm and grid, and a minimal legend for identifying grid components. The visualizer displays the visited squares first and once the end node is visited, a path is drawn from start to end. The path is the shortest path calculated using the algorithm chosen.
 
@@ -41,12 +42,13 @@ showActive(path, i) {
 
 ## Algorithms
 
-Currently, the visualizer supports three algorithms: Breadth-first search, Depth-first search, and A* search. All of these are implemented here as path-finding algorithms with a Manhattan heuristic and no diagonals allowed.
+The site supports two algorithms: Breadth-first search and A* search. These are implemented as path-finding algorithms moving in an North, East, South, West pattern
+with more coming in the future.  
 
 Manhattan distances are calculated as follows:
 
 ```javascript
-static manhattan(p1, p2) {
+ manhattan(p1, p2) {
   const dx = Math.abs(p2.x - p1.x);
   const dy = Math.abs(p2.y - p1.y);
   return dx + dy;
