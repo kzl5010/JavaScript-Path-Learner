@@ -252,7 +252,7 @@
 	                $("#message").text("No solution (" + duration + "ms)");
 	                this.noSolution();
 	            } else {
-	                $("#message").text("search took " + duration + "ms.");
+	                $("#message").text("Search took " + duration + "ms.");
 	                this.traceRoute(path);
 	                this.showAllVisited();
 	            }

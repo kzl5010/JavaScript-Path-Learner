@@ -2,7 +2,7 @@
 
 [JavaScript Path Learner](https://js-maze-solver.herokuapp.com/) is a JavaScript project designed to help learn algorithms. It is created with JavaScript, jQuery, HTML5, and styled with CSS3.
 
-![Home page](docs/images/home.png)
+<!-- ![Home page](docs/images/home.png) -->
 
 ## Features
 - [x] Generate mazes and choose size

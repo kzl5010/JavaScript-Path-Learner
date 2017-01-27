@@ -189,7 +189,7 @@ class GraphSolver {
         this.noSolution();
     }
     else {
-        $("#message").text("search took " + duration + "ms.");
+        $("#message").text("Search took " + duration + "ms.");
         this.traceRoute(path);
         this.showAllVisited();
 
