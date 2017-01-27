@@ -1,6 +1,6 @@
-import { astar } from './algo';
-import Graph from './graph';
-import { bfs } from './bfs';
+import { astar } from './lib/algo';
+import Graph from './lib/graph';
+import { bfs } from './lib/bfs';
 
 let WALL = 0;
 let performance = window.performance;

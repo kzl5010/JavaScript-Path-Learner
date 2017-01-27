@@ -3,8 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title>JavaScript Path Learner</title>
+    <link rel="stylesheet" type="text/css"
+      href="https://fonts.googleapis.com/css?family=Tangerine">
     <script src="https://use.fontawesome.com/872b3d4c1a.js"></script>
-    <div id="header">	<link rel="stylesheet" type="text/css" href="index.css" />
+    <div id="header">	<link rel="stylesheet" type="text/css" href="assets/index.css" />
   </head>
   <body>
       <header>
@@ -28,27 +30,27 @@
 
     <div class="Instructions">
       <h4>How to Use JPL</h4>
-      This site is designed to be an instructional guide to learning
-      new graph algorithms by comparing methods of solving. Once you have selected
-      an algorithm you can visualize the path that it would take through a given
+      1. Choose an algorithm to visualize the path that it would take through a given
       weighted/unweighted grid by clicking on the start and end points.
     <br/>
-      To begin, you choose the size of the maze, how densely populated it is with obstacles,
+    <br/>
+      2. To begin, you choose the size of the maze, how densely populated it is with obstacles,
       and have the option of making it weighted or unweighted. <br/>
       After the path completes, you can turn on Show All Tiles to see every tile
-      that the algorithm searched. There should be some very obvious differences
-      between BFS and A* in the pathing and nodes visited. <br/>
-      Additionally A* has the option of finding the closest tile to an unsolvable path
+      that the algorithm searched. <br/> <br/>
+      3. Additionally A* has the option of finding the closest tile to an unsolvable path
       whereas a "dumb" algorithm like BFS does not have that option.
 
     </div>
 
   	<div id="content">
   	    <div id="controls" class='clear'>
+          <label for="algoType">Select Algorithm</label>
           <select id="algoType" name="algoType">
             <option value="astar">A*</option>
             <option value="bfs">BFS</option>
           </select>
+          <br/>
 	    		<label for="WallFreq">Number of Obstacles</label>
 	    		<select id="WallFreq">
             <option value=".0">0%</option>
@@ -58,6 +60,7 @@
 	    			<option value=".4">40%</option>
 	    			<option value=".5">50%</option>
 	    		</select>
+          <br />
 	    		<br />
 	    		<label for="graphSize">Maze Size </label>
 	    		<select id="graphSize" name="graphSize">
@@ -71,21 +74,22 @@
 	    		</select>
 
 	    		<br />
-	    		<label for="showAll">Show all tiles searched?<br/> Run After Search</label>
+          <br />
+	    		<label for="showAll">Show all tiles searched? (Run After Search)</label>
           <label class="switch">
 	    		  <input type="checkbox" name="showAll" id="showAll" />
             <div class="slider round"></div>
           </label>
 	    		<br />
           <br />
-	    		<label for="nextNode">Closest Tile on Unsolvable?<br/>Only on A*</label>
+	    		<!-- <label for="nextNode">Closest Tile on Unsolvable? (Only on A*)</label>
           <label class="switch">
 	    		<input type="checkbox" name="nextNode" id="nextNode" />
           <div class="slider round"></div>
           </label>
           <br />
-	    		<br />
-	    		<label for="weighted">Weighted Graph? (Default: Unweighted, Must generate new grid)</label>
+	    		<br /> -->
+	    		<label for="weighted">Weighted Graph? (Must generate new grid)</label>
           <label class="switch">
 	    		<input type="checkbox" name="weighted" id="weighted" />
           <div class="slider round"></div>

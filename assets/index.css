@@ -93,7 +93,7 @@ i {
     margin:0;
     float:left;
     margin-bottom: 10px;
-    margin-left: 650px;
+    margin-left: 700px;
 }
 #header {
 	/*border-bottom:solid 8px #333;*/
@@ -178,6 +178,7 @@ box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 #search_grid  {
 	width: 800px;
 	height:700px;
+	margin-bottom: 10px;
 	/*position: absolute;*/
 	float: right;
 }
@@ -229,7 +230,7 @@ box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 h4 {
 	margin-top: 0px;
 	margin-bottom: 0px;
-	margin-left: 555px;
+	margin-left: 450px;
 }
 
 #weightsKey {
@@ -296,5 +297,6 @@ input:checked + .slider:before {
 
 .Instructions {
 	width: 1200px;
-	margin-left: 200px;
+  /*position: absolute;  or absolute */
+  margin-left: 350px;
 }

@@ -1,6 +1,6 @@
 # JavaScript Path Learner
 
-[JavaScript Path Learner](http://www.justinsuen.com/projects/visualgos) is a JavaScript project intended to help users visualize how different algorithms work. It is created with vanilla JavaScript, jQuery, and styled with CSS3 in HTML5.
+[JavaScript Path Learner](https://js-maze-solver.herokuapp.com/) is a JavaScript project designed to help learn algorithms. It is created with JavaScript, jQuery, HTML5, and styled with CSS3.
 
 ![Home page](docs/images/home.png)
 
@@ -16,21 +16,21 @@ This visualizer features a tailored random grid. To run an algorithm the user ch
 
 <!-- ![AStar with path](docs/images/astar-path.png) -->
 
-The side bar contains simple intuitive instructions, options for the algorithm and grid, and a minimal legend for identifying grid components. The visualizer displays the visited squares first and once the end node is visited, a path is drawn from start to end. The path is the shortest path calculated using the algorithm chosen.
-
-![20x20 grid](docs/images/small-grid.png)
+The top of the screen contains instructions. There are user controlled options for algorithm to run, grid size, obstacle density, and grid weight. The visualizer displays the path from the start node to the end node with the option to view all the visited tiles after the search. The path is the shortest path calculated using the algorithm chosen.
+<!--
+![20x20 grid](docs/images/small-grid.png) -->
 
 The visualizer supports different grid sizes based on user preference. The **Generate Maze** button allows the user to generate randomized mazes as desired.
 
-![Breadth first](docs/images/breadth-first-spread.png)
+<!-- ![Breadth first](docs/images/breadth-first-spread.png) -->
 
 As the algorithm runs almost instantly, `setTimeout` methods were used the build the visited nodes on screen. Later, the path is also drawn with a calculated timeout.
+<!--
+![Breadth first done](docs/images/depth-first-done.png) -->
 
-![Breadth first done](docs/images/depth-first-done.png)
+After one second pass, the grid is ready to run another search.
 
-After three seconds pass, the grid is cleared with the end node acting as the new start node. Here is a sample of the helper methods.
-
-```javascript
+<!-- ```javascript
 showActive(path, i) {
   this.getElement(path[i]).addClass("path");
   setTimeout(() => {
@@ -38,14 +38,12 @@ showActive(path, i) {
       this.showActive(path, i+1);
   }, 800/this.gridSize);
 }
-```
+``` -->
 
 ## Algorithms
 
 The site supports two algorithms: Breadth-first search and A* search. These are implemented as path-finding algorithms moving in an North, East, South, West pattern
-with more coming in the future.  
-
-Manhattan distances are calculated as follows:
+with more coming in the future. A* is currently implement using the following manhattan heuristic to estimate distance costs from one node to another:
 
 ```javascript
  manhattan(p1, p2) {
@@ -57,9 +55,9 @@ Manhattan distances are calculated as follows:
 
 ### A* Search
 
-The A* algorithm was implemented with arrays acting as the open and closed sets. Graph nodes were stored in a class with respective `f, g, and h` scores. Here are snippets of the implementation:
+The A* algorithm was implemented with arrays acting as the open and closed sets. Graph nodes were stored in a class and a binary heap was used to determine the lowest cost path from the start to the endpoint.
 
-```javascript
+<!-- ```javascript
 // Here the lowest scored node is found for the next visit
 for (let i = 0; i < openSet.length; i++) {
   if (openSet[i].f < openSet[lowestInd].f)
@@ -94,13 +92,12 @@ for (let i = 0; i < neighbors.length; i++) {
     n.f = n.g + n.h;
   }
 }
-```
+``` -->
 
 ### Breadth-first Search
 
-BFS here was implemented with an array as a queue. Nodes were pushed into a closed set once it was visited.
-
-```javascript
+BFS here was implemented with an array as a queue. Nodes were pushed into a closed set once it was visited and the search worked by adding neighbors of the most recent node popped from the queue until the queue was empty.
+<!-- ```javascript
 currNode.closed = true;
 closedSet.push(currNode);
 
@@ -117,8 +114,8 @@ for (let i = 0; i < neighbors.length; i++) {
     queue.push(n);
   }
 }
-```
-
+``` -->
+<!--
 ### Depth-first Search
 
 For this project, DFS was implemented with an array as the stack. To find the path associated with the proper nodes, we also had to have a "path cache" array stored with the node:
@@ -149,16 +146,15 @@ for (let i = 0; i < neighbors.length; i++) {
     n.parent = currNode;
     stack.push([n, currPath.concat([n])]);
   }
-}
-```
+} -->
+<!-- ``` -->
 
 ## Future
 
 Here are some features that I would like to implement in the future:
-- [ ] Node weights
-- [ ] Weighted path finding with Kruskal's, Dijkstra's, and Prim's
-- [ ] User drawable mazes and setting start/end points
-- [ ] User selectable block frequency
+- [ ] Fix known bug of user clicking while the algorithm is still running disrupting things.
+- [ ] The path draws all the nodes as it visits them instead of after
+- [ ] More algorithms Kruskal's, Dijkstra's, and Prim's
+- [ ] User drawable mazes
 - [ ] Different heuristics and allowing diagonals
-- [ ] Information on algorithm runtime, resources, and code snippet
-- [ ] Fix known bug of user double clicking
+- [ ] More direct algorithmic comparisons, like running two at the same time using different colors
