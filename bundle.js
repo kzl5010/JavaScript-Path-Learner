@@ -368,6 +368,9 @@
 	    var heap = getHeap();
 	    var closestNode = start; // set the start node to be the closest if required
 	
+	    if (start === undefined || end === undefined) {
+	      return [];
+	    }
 	    start.h = heuristic(start, end);
 	    graph.markVisited(start);
 	
