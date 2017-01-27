@@ -44,10 +44,18 @@ $(function() {
     });
 
     $algoType.change(function(){
-      grid = new GraphSolver($grid, options, searches[$(this).val()].search, searches[$(this).val()]);
-      $description.html(descriptions[$(this).val()]);
+      let newOptions = {
+          WallFreq: $WallFreq.val(),
+          graphSize: $graphSize.val(),
+          showAll: $showAll.is("checked"),
+          closest: $nextNode.is("checked")
+      };
+      grid = new GraphSolver($grid, newOptions, searches[$(this).val()].search, searches[$(this).val()]);
+      grid.initialize();
       $showAll.prop("checked", false);
       $nextNode.prop("checked", false);
+      // $WallFreq.val(".0");
+      $description.html(descriptions[$(this).val()]);
     });
 
     $WallFreq.change(function() {

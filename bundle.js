@@ -101,10 +101,18 @@
 	    });
 	
 	    $algoType.change(function () {
-	        grid = new GraphSolver($grid, options, searches[$(this).val()].search, searches[$(this).val()]);
-	        $description.html(descriptions[$(this).val()]);
+	        var newOptions = {
+	            WallFreq: $WallFreq.val(),
+	            graphSize: $graphSize.val(),
+	            showAll: $showAll.is("checked"),
+	            closest: $nextNode.is("checked")
+	        };
+	        grid = new GraphSolver($grid, newOptions, searches[$(this).val()].search, searches[$(this).val()]);
+	        grid.initialize();
 	        $showAll.prop("checked", false);
 	        $nextNode.prop("checked", false);
+	        // $WallFreq.val(".0");
+	        $description.html(descriptions[$(this).val()]);
 	    });
 	
 	    $WallFreq.change(function () {
@@ -349,6 +357,8 @@
 	  return path;
 	}
 	
+	//The heap data structure code is from Eloquent JavaScript
+	
 	function getHeap() {
 	  return new BinaryHeap(function (node) {
 	    return node.f;
@@ -364,7 +374,7 @@
 	    var closest = options.closest || false;
 	
 	    var heap = getHeap();
-	    var closestNode = start; // set the start node to be the closest if required
+	    var closestNode = start;
 	
 	    if (start === undefined || end === undefined) {
 	      return [];

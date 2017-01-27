@@ -8,6 +8,8 @@ function pathTo(end) {
   return path;
 }
 
+//The heap data structure code is from Eloquent JavaScript
+
 function getHeap() {
   return new BinaryHeap(function(node) {
     return node.f;
@@ -23,10 +25,10 @@ export const astar = {
     let closest = options.closest || false;
 
     let heap = getHeap();
-    let closestNode = start; // set the start node to be the closest if required
+    let closestNode = start;
 
     if (start === undefined || end === undefined) {
-      return []; 
+      return [];
     }
     start.h = heuristic(start, end);
     graph.markVisited(start);

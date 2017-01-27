@@ -2,24 +2,37 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>A*maker</title>
-    <div id="header">	<link rel="stylesheet" type="text/css" href="demo.css" />
+    <title>JavaScript Path Learner</title>
+    <script src="https://use.fontawesome.com/872b3d4c1a.js"></script>
+    <div id="header">	<link rel="stylesheet" type="text/css" href="index.css" />
   </head>
   <body>
       <header>
         <div class="header-nav">
           <h1>Javascript Path Finder</h1>
           <ul>
+            <li class="links">
+              <a href="https://github.com/kzl5010/js-project">
+                <i class="fa fa-github"></i>
+              </a>
+            </li class="links">
             <li>
-              <a href=''>Github</a>
-            </li>
-            <li>
-              <a href=''>LinkedIn</a>
+              <a href="https://www.linkedin.com/in/ken-lee-1ab289133/">
+                <i class="fa fa-linkedin-square"></i>
+              </a>
             </li>
           </ul>
         </div>
       </header>
   	</div>
+
+    <div class="Instructions">
+      Welcome to JPF! The site is designed to be an instructional guide to learning
+      new graph algorithms by comparing methods of solving. Once you have selected
+      an algorithm you can visualize the path that it would take through a given
+      weighted/unweighted grid by clicking on the start and end points.
+
+    </div>
 
   	<div id="content">
   		<h2>How to Zar</h2>
@@ -28,7 +41,7 @@
             <option value="astar">A*</option>
             <option value="bfs">BFS</option>
           </select>
-	    		<label for="WallFreq">Percent of Walls</label>
+	    		<label for="WallFreq">Number of Obstacles</label>
 	    		<select id="WallFreq">
             <option value=".0">0%</option>
             <option value=".1">10%</option>

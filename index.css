@@ -129,20 +129,13 @@ pre span.key {
 .right {
 	float: right;
 }
-.clear:after {
-	content: ".";
-	display: block;
-	height: 0;
-	clear: both;
-	visibility: hidden;
-}
+
 
 #message {
 	color:#f00;
 	font-size:1.2em;
 }
 #controls {
-	border: dashed 3px #9999BB;
 	border-left:none;
 	border-right:none;
 	margin-bottom: 25px;

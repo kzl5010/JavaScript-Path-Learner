@@ -1,77 +1,162 @@
-## JS Project Proposal: Algorithm Visualizer
+# JavaScript Path Learner
 
-### Background
+[JavaScript Path Learner](http://www.justinsuen.com/projects/visualgos) is a JavaScript project intended to help users visualize how different algorithms work. It is created with vanilla JavaScript, jQuery, and styled with CSS3 in HTML5.
 
-Algorithms Visualization is as the name describes. The primary focus will be path finding using graph algorithms like A\* and BFS.
+![Home page](docs/images/home.png)
 
-There should be some variations of certain algorithms included in the above list. The **Functionality & MVP** and **Bonus Features** sections outline the project and future updates.  
+## Features
+- [x] Generate mazes
+- [x] Set start and end points
+- [x] Choose algorithm to be ran
+- [x] An instructions tooltip
 
-### Functionality & MVP  
+## Design
+This visualizer uses a simple grid system where a starting block is placed at the `(0, 0)` position. To run a visualization, the user just has to click an open square on the grid and the algorithm will run.
 
-With this Algorithm Visualizer, users will be able to:
+![AStar with path](docs/images/astar-path.png)
 
-- [ ] Choose the startpoint and endpoint for a "maze" solving algorithms
-- [ ] Choose the settings for randomized initial states and characteristics, e.g. weighted vs. unweighted.
+The side bar contains simple intuitive instructions, options for the algorithm and grid, and a minimal legend for identifying grid components. The visualizer displays the visited squares first and once the end node is visited, a path is drawn from start to end. The path is the shortest path calculated using the algorithm chosen.
 
-In addition, this project will include:
+![20x20 grid](docs/images/small-grid.png)
 
-- [ ] A description of the algorithm at the bottom of the page
-- [ ] Links to my Github and LinkedIn profile
-- [ ] A production Readme
+The visualizer supports different grid sizes based on user preference. The **Generate Maze** button allows the user to generate randomized mazes as desired.
 
-### Wireframes
+![Breadth first](docs/images/breadth-first-spread.png)
 
-This app will consist of a single screen with one or two grids/mazes, and nav links to the Github, LinkedIn,
-and the Description.  The controls will include options to change the starting data and allow the user to choose starting and ending points with clicking.  
+As the algorithm runs almost instantly, `setTimeout` methods were used the build the visited nodes on screen. Later, the path is also drawn with a calculated timeout.
 
-![wireframes](./js-wireframe.png)
+![Breadth first done](docs/images/depth-first-done.png)
 
-![wireframes](./dfsalgowire.png)
-### Architecture and Technologies
+After three seconds pass, the grid is cleared with the end node acting as the new start node. Here is a sample of the helper methods.
 
-This project will be implemented with the following technologies:
+```javascript
+showActive(path, i) {
+  this.getElement(path[i]).addClass("path");
+  setTimeout(() => {
+    if (i < path.length - 2)
+      this.showActive(path, i+1);
+  }, 800/this.gridSize);
+}
+```
 
-- Vanilla JavaScript and `jquery` for overall structure and logic,
-- HTML5 for DOM manipulation and rendering,
-- Webpack to bundle and serve up the various scripts.
+## Algorithms
 
-In addition to the webpack entry file, there will be four scripts involved in this project:
+Currently, the visualizer supports three algorithms: Breadth-first search, Depth-first search, and A* search. All of these are implemented here as path-finding algorithms with a Manhattan heuristic and no diagonals allowed.
 
-`graph.js`: this script will handle the logic for creating and updating the necessary html elements and rendering them to the DOM.
+Manhattan distances are calculated as follows:
 
-`algorithm.js`: this script will handle the logic behind the scenes.  An Algorithm object will hold a `name` (of the algorithm) and execute an algorithm.  It will be responsible for executing a given algorithm.
+```javascript
+static manhattan(p1, p2) {
+  const dx = Math.abs(p2.x - p1.x);
+  const dy = Math.abs(p2.y - p1.y);
+  return dx + dy;
+}
+```
 
-`entry.js`: this script will hour the logic and functions for all the graph algorithms.
+### A* Search
 
-### Implementation Timeline
+The A* algorithm was implemented with arrays acting as the open and closed sets. Graph nodes were stored in a class with respective `f, g, and h` scores. Here are snippets of the implementation:
 
-**Day 1**: Install all necessary Node modules, including getting webpack and `jQuery` running.  Make `webpack.config.js` and `package.json`.  Create basic entry file and the bare bones of all 4 scripts outlined above.  Learn the basics of jQuery rendering.  Goals for the day:
+```javascript
+// Here the lowest scored node is found for the next visit
+for (let i = 0; i < openSet.length; i++) {
+  if (openSet[i].f < openSet[lowestInd].f)
+    lowestInd = i;
+}
 
-- Get a green bundle with `webpack`
-- Create a grid using jQuery to render an object to the html file
+...
 
-**Day 2**: Dedicate this day to learning the `Easel.js` API.  First, build out the `graph ` objects to connect to the `algorithm` object.  Then, use `grid.js` to create and render an array or maze/graph depending on the algorithm. Goals for the day:
+// With all the neighbors of our currentNode, we calculate gScores
+// accordingly and update fScores but using Manhattan distances.
+for (let i = 0; i < neighbors.length; i++) {
+  let n = neighbors[i];
 
-- Complete the `algo.js` module (constructor, update functions)
-- Render a maze to the html document using jquery
-- Set up preset states for the grid
+  if (n.closed || n.weight === 0)
+    continue;
 
-**Day 3**: Create the algorithm logic backend.  Build out modular functions for handling the different data types Incorporate the algorithm logic into the `grid.js` rendering.  Goals for the day:
+  let gScore = currNode.g + 1;
+  let bestGScore = false;
 
-- Export an `algorithm` object with correct type and name handling logic
-- Have a functional visualization on the `Canvas` frontend that correctly handles the types of algorith ms and data.
+  if (!n.visited) {
+    bestGScore = true;
+    n.visited = true;
+    n.h = AStar.manhattan(n.pos, this.end.pos);
+    openSet.push(n);
+  } else if (gScore < n.g) {
+    bestGScore = true;
+  }
 
+  if (bestGScore) {
+    n.parent = currNode;
+    n.g = gScore;
+    n.f = n.g + n.h;
+  }
+}
+```
 
-**Day 4**: Complete the graph algorithm for the user to interact with the game.  Style the frontend. Goals for the day:
+### Breadth-first Search
 
-- Finish `graph.js` module
-- Have a styled `Canvas`, nice looking controls and title
+BFS here was implemented with an array as a queue. Nodes were pushed into a closed set once it was visited.
 
+```javascript
+currNode.closed = true;
+closedSet.push(currNode);
 
-### Bonus features
+let neighbors = graph.neighbors(currNode);
+for (let i = 0; i < neighbors.length; i++) {
+  let n = neighbors[i];
 
-Some possible updates are:
-- [ ] Add more algorithms like Dijkstra's, Primm's. 
-- [ ] Add their own data to test the algorithms
-- [ ] Add multiple choices for starting states that are interesting
-- [ ] Compare similar algorithms like sorting vs sorting or graph vs graph.
+  if (n.closed || n.weight === 0)
+    continue;
+
+  if (!n.visited) {
+    n.visited = true;
+    n.parent = currNode;
+    queue.push(n);
+  }
+}
+```
+
+### Depth-first Search
+
+For this project, DFS was implemented with an array as the stack. To find the path associated with the proper nodes, we also had to have a "path cache" array stored with the node:
+
+```javascript
+// Each stack push will be an array of two things:
+// 1. The node
+// 2. The current path that leads to the node
+let stack = [[start, []]];
+```
+
+As with BFS and A*, we visit nodes and push it into our storage:
+
+```javascript
+for (let i = 0; i < neighbors.length; i++) {
+  let n = neighbors[i];
+
+  if (n.weight === 0)
+    continue;
+
+  // Storage here looks different with the extra arrays
+  if (n.x === end.x && n.y === end.y) {
+    return { path: currPath.concat([n]), closedSet: closedSet.concat([currNode]) };
+  }
+
+  if (!n.visited) {
+    n.visited = true;
+    n.parent = currNode;
+    stack.push([n, currPath.concat([n])]);
+  }
+}
+```
+
+## Future
+
+Here are some features that I would like to implement in the future:
+- [ ] Node weights
+- [ ] Weighted path finding with Kruskal's, Dijkstra's, and Prim's
+- [ ] User drawable mazes and setting start/end points
+- [ ] User selectable block frequency
+- [ ] Different heuristics and allowing diagonals
+- [ ] Information on algorithm runtime, resources, and code snippet
+- [ ] Fix known bug of user double clicking
