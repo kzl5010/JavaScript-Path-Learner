@@ -127,7 +127,7 @@ Breadth-First-Search(Graph, root):
 ## Future
 
 Here are some features that I would like to implement in the future:
-- [ ] Fix known bug of user clicking while the algorithm is still running disrupting things.
+- [ ] Bugfix: User clicking while the algorithm is still running disrupts things.
 - [ ] The path draws all the nodes as it visits them instead of after
 - [ ] More algorithms Kruskal's, Dijkstra's, and Prim's
 - [ ] User drawable mazes
