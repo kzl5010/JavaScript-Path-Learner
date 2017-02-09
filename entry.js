@@ -114,7 +114,7 @@ class GraphSolver {
       this.startSet = false;
 
       for(let x = 0; x < this.options.graphSize; x++) {
-          let $row = $("<div class='clear' />"),
+          let $row = $("<div class='row' />"),
               nodeRow = [],
               gridRow = [];
 
