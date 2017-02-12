@@ -157,6 +157,7 @@ class GraphSolver {
       });
   };
   chosenNode($end) {
+    // this.graph.clearNodes();
     $end.removeClass("visited")
     let end = this.findNode($end);
 
@@ -229,7 +230,8 @@ class GraphSolver {
   };
   traceRoute(path) {
       let grid = this.grid,
-          timeout = 1000 / grid.length,
+          timeout = 30,
+          // timeout = 1000 / grid.length,
           elementFromNode = function(node) {
           return grid[node.x][node.y];
       };

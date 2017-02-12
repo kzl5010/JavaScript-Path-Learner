@@ -221,6 +221,7 @@
 	    }, {
 	        key: 'chosenNode',
 	        value: function chosenNode($end) {
+	            // this.graph.clearNodes();
 	            $end.removeClass("visited");
 	            var end = this.findNode($end);
 	
@@ -298,8 +299,10 @@
 	        key: 'traceRoute',
 	        value: function traceRoute(path) {
 	            var grid = this.grid,
-	                timeout = 1000 / grid.length,
-	                elementFromNode = function elementFromNode(node) {
+	                timeout = 30,
+	
+	            // timeout = 1000 / grid.length,
+	            elementFromNode = function elementFromNode(node) {
 	                return grid[node.x][node.y];
 	            };
 	
