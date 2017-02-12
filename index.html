@@ -29,15 +29,9 @@
   	</div>
 
     <div class="Instructions">
-      <h4>How to Use JPL</h4>
-      1. Choose an algorithm to visualize the path that it would take through a given
-      weighted/unweighted grid by clicking on the start and end points.
-    <br/>
-    <br/>
-      2. To begin, you choose the size of the maze, how densely populated it is with obstacles,
-      and have the option of making it weighted or unweighted. <br/>
-      After the path completes, you can turn on Show All Tiles to see every tile
-      that the algorithm searched. <br/> <br/>
+      <!-- <h4>How to Use JPL</h4> -->
+      1. Setup the algorithm and graph size, obstacle denisty, and whether it is weighted weighted. </br>
+      2. Select Start and End Points.
       <!-- 3. Additionally A* has the option of finding the closest tile to an unsolvable path
       whereas a "dumb" algorithm like BFS does not have that option. -->
       3. Notice the difference in pathing and Nodes visited between BFS and A*.
@@ -51,8 +45,6 @@
             <option value="astar">A*</option>
             <option value="bfs">BFS</option>
           </select>
-          <br/>
-          <br/>
 	    		<label for="WallFreq">Number of Obstacles</label>
 	    		<select id="WallFreq">
             <option value=".0">0%</option>
@@ -62,8 +54,6 @@
 	    			<option value=".4">40%</option>
 	    			<!-- <option value=".5">50%</option> -->
 	    		</select>
-          <br />
-	    		<br />
 	    		<label for="graphSize">Maze Size </label>
 	    		<select id="graphSize" name="graphSize">
 	    			<option value="10">10x10</option>
@@ -74,15 +64,11 @@
             <!-- <option value="75">75x75</option>
 	    			<option value="100">100x100</option> -->
 	    		</select>
-	    		<br />
-          <br />
 	    		<label for="showAll">Show all tiles searched? (Run After Search)</label>
           <label class="switch">
 	    		  <input type="checkbox" name="showAll" id="showAll" />
             <div class="slider round"></div>
           </label>
-	    		<br />
-          <br />
 	    		<!-- <label for="nextNode">Closest Tile on Unsolvable? (Only on A*)</label>
           <label class="switch">
 	    		<input type="checkbox" name="nextNode" id="nextNode" />
@@ -95,15 +81,11 @@
 	    		<input type="checkbox" name="weighted" id="weighted" />
           <div class="slider round"></div>
           </label>
-          <br />
-	    		<br />
 	    		<label for="displayWeights">Display weight values?</label>
           <label class="switch">
 	    		<input type="checkbox" name="displayWeights" id="displayWeights" />
           <div class="slider round"></div>
           </label>
-          <br />
-	    		<br />
 	    		<input type="button" id="generateGrid" value="New Grid" />
 	    		<fieldset id='weightsKey'>
 	    			<legend>Key:</legend>

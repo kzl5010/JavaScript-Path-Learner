@@ -18,9 +18,10 @@ header {
 
 .header-nav {
   width: 100vw;
-	height: 55px;
+	height: 75px;
   /*// margin: 0;*/
   display: flex;
+	flex-direction: column;
   justify-content:space-between;
 	align-items: center;
 }
@@ -28,7 +29,8 @@ header {
 header a {
 }
 
-ul {
+.header-nav ul {
+	margin-top: 43px;
 	display: flex;
 	flex-direction: row;
 	font-size: 1.5em;
@@ -40,7 +42,7 @@ h2 {
     font-weight:normal;
 }
 
-.clear {
+.r {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -80,6 +82,7 @@ i {
     white-space:pre;
     border:none;
 }
+
 #content {
 	display: flex;
   flex-direction: row;
@@ -96,13 +99,15 @@ i {
 	background:#ddf;
 }
 #header h1 {
-    margin:0;
-    float:left;
-    margin-bottom: 10px;
-    margin-left: 700px;
+		position: absolute;
+    margin: auto;
+    /*float:left;*/
+    /*margin-bottom: 10px;*/
+    /*margin-left: 700px;*/
 }
 #header {
 	/*border-bottom:solid 8px #333;*/
+	height: 75px
 	margin-bottom:0px;
     position: relative;
 }
@@ -153,6 +158,10 @@ pre span.key {
 	float: right;
 }
 
+label {
+	margin-top: 15px;
+}
+
 
 #message {
 	color:#f00;
@@ -164,7 +173,7 @@ pre span.key {
   max-width: 300px;
   margin-right: 20px;
 
-  padding: 30px;
+  padding: 20px;
   font-family: "VT323";
   color: #68AB63;
 
@@ -174,27 +183,29 @@ pre span.key {
 }
 
 #controls select {
-    margin: 10px 0px;
+    margin: 0px 0px;
     width: 100%;
     font-size: 80%;
 }
 
 #main {
-	width: 700px;
+	width: 750px;
 	border-radius: 10px;
-	padding-left: 24px;
+	padding: 20px;
 	background-color: #FFFFFF;
 	box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-  height: 525px;
+  height: 750px;
 }
 
 #search_grid  {
 	padding-top: 10px;
-	width: 500px;
-	height:500px;
-	margin-bottom: 10px;
+	width: 650px;
+	height:650px;
+	/*padding-left: 20px;*/
+	/*padding-right: 30px; */
+	margin: auto;
 	/*position: absolute;*/
-	float: right;
+	/*float: right;*/
 }
 
 
@@ -310,7 +321,9 @@ input:checked + .slider:before {
 }
 
 .Instructions {
-	width: 1200px;
+	width: 950px;
+	margin: auto;
+	margin-bottom: 15px; 
   /*position: absolute;  or absolute */
-  margin-left: 350px;
+  /*margin-left: 350px;*/
 }

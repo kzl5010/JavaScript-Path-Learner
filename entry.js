@@ -191,6 +191,7 @@ class GraphSolver {
     else {
         $("#message").text("Search took " + duration + "ms.");
         this.traceRoute(path);
+        // this.traceRoute(this.graph.visitedNodes);
         this.showAllVisited();
 
     }

@@ -48,13 +48,13 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _algo = __webpack_require__(6);
+	var _algo = __webpack_require__(1);
 	
-	var _graph = __webpack_require__(4);
+	var _graph = __webpack_require__(2);
 	
 	var _graph2 = _interopRequireDefault(_graph);
 	
-	var _bfs = __webpack_require__(5);
+	var _bfs = __webpack_require__(3);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -177,7 +177,7 @@
 	            this.startSet = false;
 	
 	            for (var x = 0; x < this.options.graphSize; x++) {
-	                var $row = $("<div class='clear' />"),
+	                var $row = $("<div class='row' />"),
 	                    nodeRow = [],
 	                    gridRow = [];
 	
@@ -254,6 +254,7 @@
 	            } else {
 	                $("#message").text("Search took " + duration + "ms.");
 	                this.traceRoute(path);
+	                // this.traceRoute(this.graph.visitedNodes);
 	                this.showAllVisited();
 	            }
 	        }
@@ -339,224 +340,7 @@
 	}();
 
 /***/ },
-/* 1 */,
-/* 2 */,
-/* 3 */,
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _algo = __webpack_require__(6);
-	
-	var _bfs = __webpack_require__(5);
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var Graph = function () {
-	  function Graph(gridIn, algo, options) {
-	    _classCallCheck(this, Graph);
-	
-	    this.algo = algo;
-	    options = options || {};
-	    this.nodeList = [];
-	    this.grid = [];
-	    for (var x = 0; x < gridIn.length; x++) {
-	      this.grid[x] = [];
-	
-	      for (var y = 0, row = gridIn[x]; y < row.length; y++) {
-	        var node = new GridNode(x, y, row[y]);
-	        this.grid[x][y] = node;
-	        this.nodeList.push(node);
-	      }
-	    }
-	    this.init();
-	  }
-	
-	  _createClass(Graph, [{
-	    key: 'init',
-	    value: function init() {
-	      this.visitedNodes = [];
-	      for (var i = 0; i < this.nodeList.length; i++) {
-	        this.algo.cleanNode(this.nodeList[i]);
-	      }
-	    }
-	  }, {
-	    key: 'clearNodes',
-	    value: function clearNodes() {
-	      for (var i = 0; i < this.visitedNodes.length; i++) {
-	        this.algo.cleanNode(this.visitedNodes[i]);
-	      }
-	      this.visitedNodes = [];
-	    }
-	  }, {
-	    key: 'markVisited',
-	    value: function markVisited(node) {
-	      this.visitedNodes.push(node);
-	    }
-	  }, {
-	    key: 'neighbors',
-	    value: function neighbors(node) {
-	      var ret = [];
-	      var x = node.x;
-	      var y = node.y;
-	      var grid = this.grid;
-	
-	      if (grid[x - 1] && grid[x - 1][y]) {
-	        ret.push(grid[x - 1][y]);
-	      }
-	
-	      if (grid[x + 1] && grid[x + 1][y]) {
-	        ret.push(grid[x + 1][y]);
-	      }
-	
-	      if (grid[x] && grid[x][y - 1]) {
-	        ret.push(grid[x][y - 1]);
-	      }
-	
-	      if (grid[x] && grid[x][y + 1]) {
-	        ret.push(grid[x][y + 1]);
-	      }
-	      return ret;
-	    }
-	  }, {
-	    key: 'toString',
-	    value: function toString() {
-	      var graphString = [];
-	      var nodes = this.grid;
-	      for (var x = 0; x < nodes.length; x++) {
-	        var rowDebug = [];
-	        var row = nodes[x];
-	        for (var y = 0; y < row.length; y++) {
-	          rowDebug.push(row[y].cost);
-	        }
-	        graphString.push(rowDebug.join(" "));
-	      }
-	      return graphString.join("\n");
-	    }
-	  }]);
-	
-	  return Graph;
-	}();
-	
-	exports.default = Graph;
-	
-	var GridNode = function () {
-	  function GridNode(x, y, cost) {
-	    _classCallCheck(this, GridNode);
-	
-	    this.x = x;
-	    this.y = y;
-	    this.cost = cost;
-	  }
-	
-	  _createClass(GridNode, [{
-	    key: 'toString',
-	    value: function toString() {
-	      return "[" + this.x + " " + this.y + "]";
-	    }
-	  }, {
-	    key: 'getCost',
-	    value: function getCost(fromNeighbor) {
-	      return this.cost;
-	    }
-	  }, {
-	    key: 'isWall',
-	    value: function isWall() {
-	      return this.cost === 0;
-	    }
-	  }]);
-
-	  return GridNode;
-	}();
-
-/***/ },
-/* 5 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	function pathTo(end) {
-	  var currentNode = end;
-	  var path = [];
-	  while (currentNode.parent) {
-	    path.unshift(currentNode);
-	    currentNode = currentNode.parent;
-	  }
-	  return path;
-	}
-	
-	var bfs = exports.bfs = {
-	
-	  search: function search(graph, start, end, options) {
-	    graph.clearNodes();
-	    var closest = options.closest || false;
-	
-	    var mySet = new Set();
-	    var myQueue = [];
-	    var closestNode = start; // set the start node to be the closest if required
-	
-	    graph.markVisited(start);
-	
-	    myQueue.push(start);
-	
-	    while (myQueue.length > 0) {
-	      var currentNode = myQueue.shift();
-	
-	      if (currentNode === end) {
-	        return pathTo(currentNode);
-	      }
-	      if (currentNode === undefined) {
-	        return [];
-	      }
-	      currentNode.closed = true;
-	
-	      var neighbors = graph.neighbors(currentNode);
-	
-	      for (var i = 0, il = neighbors.length; i < il; ++i) {
-	        var neighbor = neighbors[i];
-	
-	        if (neighbor.closed || neighbor.isWall()) {
-	          continue;
-	        }
-	        var beenVisited = neighbor.visited;
-	
-	        if (!beenVisited) {
-	          myQueue.push(neighbor);
-	          neighbor.visited = true;
-	          neighbor.parent = currentNode;
-	          graph.markVisited(neighbor);
-	        }
-	      }
-	    }
-	
-	    if (closest) {
-	      return pathTo(closestNode);
-	    }
-	
-	    return [];
-	  },
-	  cleanNode: function cleanNode(node) {
-	    if (node === undefined) {
-	      return;
-	    }
-	    node.visited = false;
-	    node.closed = false;
-	    node.parent = null;
-	  }
-	};
-
-/***/ },
-/* 6 */
+/* 1 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -760,6 +544,220 @@
 	        break;
 	      }
 	    }
+	  }
+	};
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _algo = __webpack_require__(1);
+	
+	var _bfs = __webpack_require__(3);
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var Graph = function () {
+	  function Graph(gridIn, algo, options) {
+	    _classCallCheck(this, Graph);
+	
+	    this.algo = algo;
+	    options = options || {};
+	    this.nodeList = [];
+	    this.grid = [];
+	    for (var x = 0; x < gridIn.length; x++) {
+	      this.grid[x] = [];
+	
+	      for (var y = 0, row = gridIn[x]; y < row.length; y++) {
+	        var node = new GridNode(x, y, row[y]);
+	        this.grid[x][y] = node;
+	        this.nodeList.push(node);
+	      }
+	    }
+	    this.init();
+	  }
+	
+	  _createClass(Graph, [{
+	    key: 'init',
+	    value: function init() {
+	      this.visitedNodes = [];
+	      for (var i = 0; i < this.nodeList.length; i++) {
+	        this.algo.cleanNode(this.nodeList[i]);
+	      }
+	    }
+	  }, {
+	    key: 'clearNodes',
+	    value: function clearNodes() {
+	      for (var i = 0; i < this.visitedNodes.length; i++) {
+	        this.algo.cleanNode(this.visitedNodes[i]);
+	      }
+	      this.visitedNodes = [];
+	    }
+	  }, {
+	    key: 'markVisited',
+	    value: function markVisited(node) {
+	      this.visitedNodes.push(node);
+	    }
+	  }, {
+	    key: 'neighbors',
+	    value: function neighbors(node) {
+	      var ret = [];
+	      var x = node.x;
+	      var y = node.y;
+	      var grid = this.grid;
+	
+	      if (grid[x - 1] && grid[x - 1][y]) {
+	        ret.push(grid[x - 1][y]);
+	      }
+	
+	      if (grid[x + 1] && grid[x + 1][y]) {
+	        ret.push(grid[x + 1][y]);
+	      }
+	
+	      if (grid[x] && grid[x][y - 1]) {
+	        ret.push(grid[x][y - 1]);
+	      }
+	
+	      if (grid[x] && grid[x][y + 1]) {
+	        ret.push(grid[x][y + 1]);
+	      }
+	      return ret;
+	    }
+	  }, {
+	    key: 'toString',
+	    value: function toString() {
+	      var graphString = [];
+	      var nodes = this.grid;
+	      for (var x = 0; x < nodes.length; x++) {
+	        var rowDebug = [];
+	        var row = nodes[x];
+	        for (var y = 0; y < row.length; y++) {
+	          rowDebug.push(row[y].cost);
+	        }
+	        graphString.push(rowDebug.join(" "));
+	      }
+	      return graphString.join("\n");
+	    }
+	  }]);
+	
+	  return Graph;
+	}();
+	
+	exports.default = Graph;
+	
+	var GridNode = function () {
+	  function GridNode(x, y, cost) {
+	    _classCallCheck(this, GridNode);
+	
+	    this.x = x;
+	    this.y = y;
+	    this.cost = cost;
+	  }
+	
+	  _createClass(GridNode, [{
+	    key: 'toString',
+	    value: function toString() {
+	      return "[" + this.x + " " + this.y + "]";
+	    }
+	  }, {
+	    key: 'getCost',
+	    value: function getCost(fromNeighbor) {
+	      return this.cost;
+	    }
+	  }, {
+	    key: 'isWall',
+	    value: function isWall() {
+	      return this.cost === 0;
+	    }
+	  }]);
+
+	  return GridNode;
+	}();
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	function pathTo(end) {
+	  var currentNode = end;
+	  var path = [];
+	  while (currentNode.parent) {
+	    path.unshift(currentNode);
+	    currentNode = currentNode.parent;
+	  }
+	  return path;
+	}
+	
+	var bfs = exports.bfs = {
+	
+	  search: function search(graph, start, end, options) {
+	    graph.clearNodes();
+	    var closest = options.closest || false;
+	
+	    var mySet = new Set();
+	    var myQueue = [];
+	    var closestNode = start; // set the start node to be the closest if required
+	
+	    graph.markVisited(start);
+	
+	    myQueue.push(start);
+	
+	    while (myQueue.length > 0) {
+	      var currentNode = myQueue.shift();
+	
+	      if (currentNode === end) {
+	        return pathTo(currentNode);
+	      }
+	      if (currentNode === undefined) {
+	        return [];
+	      }
+	      currentNode.closed = true;
+	
+	      var neighbors = graph.neighbors(currentNode);
+	
+	      for (var i = 0, il = neighbors.length; i < il; ++i) {
+	        var neighbor = neighbors[i];
+	
+	        if (neighbor.closed || neighbor.isWall()) {
+	          continue;
+	        }
+	        var beenVisited = neighbor.visited;
+	
+	        if (!beenVisited) {
+	          myQueue.push(neighbor);
+	          neighbor.visited = true;
+	          neighbor.parent = currentNode;
+	          graph.markVisited(neighbor);
+	        }
+	      }
+	    }
+	
+	    if (closest) {
+	      return pathTo(closestNode);
+	    }
+	
+	    return [];
+	  },
+	  cleanNode: function cleanNode(node) {
+	    if (node === undefined) {
+	      return;
+	    }
+	    node.visited = false;
+	    node.closed = false;
+	    node.parent = null;
 	  }
 	};
 
