@@ -86,7 +86,7 @@ $(function() {
 
 });
 
-let css = { first: "first", end: "end", brick: "brick", path: "path" };
+let css = { first: "first", end: "end", brick: "brick", path: "path", route: "route" };
 
 class GraphSolver {
   constructor($graph, options, implementation, algo) {
@@ -171,6 +171,7 @@ class GraphSolver {
     }
 
     this.$cells.removeClass(css.end);
+    this.$cells.removeClass(css.route);
     this.$cells.removeClass("visited");
     this.$cells.removeClass(css.path);
     $end.addClass(css.end);
@@ -191,8 +192,9 @@ class GraphSolver {
     }
     else {
         $("#message").text("Search took " + duration + "ms.");
-        this.traceRoute(path);
-        // this.traceRoute(this.graph.visitedNodes);
+        // this.traceRoute(path);
+        this.path = path;
+        this.traceRoute(this.graph.visitedNodes);
         this.showAllVisited();
 
     }
@@ -230,7 +232,7 @@ class GraphSolver {
   };
   traceRoute(path) {
       let grid = this.grid,
-          timeout = 30,
+          timeout = 18,
           // timeout = 1000 / grid.length,
           elementFromNode = function(node) {
           return grid[node.x][node.y];
@@ -255,12 +257,27 @@ class GraphSolver {
       };
       let addClass = function(path, i) {
           if(i >= path.length) {
+              addClass2(that.path, 0)
               return removeClass(path, 0);
           }
           elementFromNode(path[i]).addClass(css.path);
           setTimeout(function() {
               addClass(path, i+1);
-          }, timeout*path[i].getCost());
+          }, timeout);
+          // Insert this above where timeout is if needed timeout*path[i].getCost()
+
+      };
+
+      let addClass2 = function(path, i) {
+          if(i >= path.length) {
+              return removeClass(path, 0);
+          }
+          elementFromNode(path[i]).removeClass(css.path);
+          elementFromNode(path[i]).addClass(css.route);
+          setTimeout(function() {
+              addClass2(path, i+1);
+          }, timeout);
+          // Insert this above where timeout is if needed timeout*path[i].getCost()
       };
 
       addClass(path, 0);

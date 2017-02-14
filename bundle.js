@@ -142,7 +142,7 @@
 	    });
 	});
 	
-	var css = { first: "first", end: "end", brick: "brick", path: "path" };
+	var css = { first: "first", end: "end", brick: "brick", path: "path", route: "route" };
 	
 	var GraphSolver = function () {
 	    function GraphSolver($graph, options, implementation, algo) {
@@ -235,6 +235,7 @@
 	            }
 	
 	            this.$cells.removeClass(css.end);
+	            this.$cells.removeClass(css.route);
 	            this.$cells.removeClass("visited");
 	            this.$cells.removeClass(css.path);
 	            $end.addClass(css.end);
@@ -254,8 +255,9 @@
 	                this.noSolution();
 	            } else {
 	                $("#message").text("Search took " + duration + "ms.");
-	                this.traceRoute(path);
-	                // this.traceRoute(this.graph.visitedNodes);
+	                // this.traceRoute(path);
+	                this.path = path;
+	                this.traceRoute(this.graph.visitedNodes);
 	                this.showAllVisited();
 	            }
 	        }
@@ -299,7 +301,7 @@
 	        key: 'traceRoute',
 	        value: function traceRoute(path) {
 	            var grid = this.grid,
-	                timeout = 30,
+	                timeout = 18,
 	
 	            // timeout = 1000 / grid.length,
 	            elementFromNode = function elementFromNode(node) {
@@ -325,12 +327,26 @@
 	            };
 	            var addClass = function addClass(path, i) {
 	                if (i >= path.length) {
+	                    addClass2(that.path, 0);
 	                    return removeClass(path, 0);
 	                }
 	                elementFromNode(path[i]).addClass(css.path);
 	                setTimeout(function () {
 	                    addClass(path, i + 1);
-	                }, timeout * path[i].getCost());
+	                }, timeout);
+	                // Insert this above where timeout is if needed timeout*path[i].getCost()
+	            };
+	
+	            var addClass2 = function addClass2(path, i) {
+	                if (i >= path.length) {
+	                    return removeClass(path, 0);
+	                }
+	                elementFromNode(path[i]).removeClass(css.path);
+	                elementFromNode(path[i]).addClass(css.route);
+	                setTimeout(function () {
+	                    addClass2(path, i + 1);
+	                }, timeout);
+	                // Insert this above where timeout is if needed timeout*path[i].getCost()
 	            };
 	
 	            addClass(path, 0);
