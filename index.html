@@ -28,18 +28,19 @@
       </header>
   	</div>
 
-    <div class="Instructions">
+    <!-- <div class="Instructions"> -->
       <!-- <h4>How to Use JPL</h4> -->
-      1. Setup the algorithm and graph size, obstacle denisty, and whether it is weighted. </br>
-      2. Select Start and End Points.
+
       <!-- 3. Additionally A* has the option of finding the closest tile to an unsolvable path
       whereas a "dumb" algorithm like BFS does not have that option. -->
       <!-- 3. Notice the difference in pathing and Nodes visited between BFS and A*. -->
 
-    </div>
+    <!-- </div> -->
 
   	<div id="content">
   	    <div id="controls" class='clear'>
+          <div class="instructions">1. Setup the algorithm and graph size, obstacle denisty, and whether it is weighted. </div>
+          <div class="instructions">2. Select Start and End Points. </div>
           <label for="algoType">Select Algorithm</label>
           <select id="algoType" name="algoType">
             <option value="astar">A*</option>
@@ -50,7 +51,7 @@
 	    		<select id="WallFreq">
             <option value=".0">0%</option>
             <option value=".1">10%</option>
-	    			<option value=".2">20%</option>
+	    			<option value=".2" selected="selected">20%</option>
 	    			<option value=".3">30%</option>
 	    			<option value=".4">40%</option>
 	    			<!-- <option value=".5">50%</option> -->
@@ -100,7 +101,7 @@
 	    			<span class="grid_item wall" style="width: 10px; height: 10px;" id="keyWall"></span> Wall </div>
 	    		</fieldset>
 				<br />
-  		<span id="message">Click on a grid position to search</span>
+  		<span id="message">Click start and end</span>
   	    </div>
   	    <div id="main">
   	    	<div id="search_grid"></div>

@@ -90,7 +90,7 @@ i {
   justify-content: center;
   margin-top: 5px;
   /*padding: 10px;*/
-  height: 790px;
+  height: 635px;
 	width: 100%;
 	/*overflow: scroll;*/
 	box-sizing: border-box;
@@ -163,19 +163,20 @@ pre span.key {
 
 label {
 	margin-top: 15px;
+	font-size: 15px;
 }
 
 
 #message {
 	color:#f00;
-	font-size:30px;
+	font-size:20px;
 }
 #controls {
 	display: flex;
   flex-direction: column;
   max-width: 300px;
   margin-right: 20px;
-
+	height: 600px;
   padding: 15px;
   font-family: "VT323";
   color: #68AB63;
@@ -192,19 +193,19 @@ label {
 }
 
 #main {
-	width: 750px;
+	width: 600px;
 	border-radius: 10px;
-	padding-right: 0px; 
+	padding-right: 0px;
 	padding: 15px;
 	background-color: #FFFFFF;
 	box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-  height: 750px;
+  height: 600px;
 }
 
 #search_grid  {
 	padding-top: 10px;
-	width: 650px;
-	height:650px;
+	width: 525px;
+	height:525px;
 	/*padding-left: 20px;*/
 	/*padding-right: 30px; */
 	margin: auto;
@@ -258,6 +259,7 @@ label {
 
 #description {
 	margin-left: 15px;
+	font-size: 15px;
 }
 
 h4 {
@@ -268,6 +270,8 @@ h4 {
 
 #weightsKey {
   display: none;
+	/*padding:5px;*/
+	font-size:15px;
 }
 
 /* The switch - the box around the slider */
@@ -328,10 +332,11 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-.Instructions {
-	width: 950px;
-	margin: auto;
-	margin-bottom: 15px;
+.instructions {
+	/*width: 950px;*/
+	/*margin: auto;*/
+	margin-bottom: 5px;
+	font-size: 15px;
   /*position: absolute;  or absolute */
   /*margin-left: 350px;*/
 }
@@ -349,9 +354,12 @@ input {
   font-family: Arial;
   color: #ffffff;
   font-size: 20px;
-  padding: 10px 20px 10px 20px;
+	padding: 0px;
+  /*padding: 10px 20px 10px 20px;*/
   text-decoration: none;
 	margin-top: 15px;
+
+  outline: none;
 }
 
 input:hover {
