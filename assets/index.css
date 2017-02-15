@@ -2,10 +2,11 @@ html, body {
 	height:100%;
 	width: 100%;
 	margin:0;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #222;
+    color: #68AB63;
 }
 
 header {
@@ -18,7 +19,7 @@ header {
 
 .header-nav {
   width: 100vw;
-	height: 75px;
+	height: 62px;
   /*// margin: 0;*/
   display: flex;
 	flex-direction: column;
@@ -30,7 +31,7 @@ header a {
 }
 
 .header-nav ul {
-	margin-top: 43px;
+	margin-top: 30px;
 	display: flex;
 	flex-direction: row;
 	font-size: 1.5em;
@@ -42,7 +43,7 @@ h2 {
     font-weight:normal;
 }
 
-.r {
+.row {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -101,6 +102,8 @@ i {
 #header h1 {
 		position: absolute;
     margin: auto;
+		color: #68AB63;
+		font-size: 30px;
     /*float:left;*/
     /*margin-bottom: 10px;*/
     /*margin-left: 700px;*/
@@ -173,7 +176,7 @@ label {
   max-width: 300px;
   margin-right: 20px;
 
-  padding: 20px;
+  padding: 15px;
   font-family: "VT323";
   color: #68AB63;
 
@@ -191,7 +194,8 @@ label {
 #main {
 	width: 750px;
 	border-radius: 10px;
-	padding: 20px;
+	padding-right: 0px; 
+	padding: 15px;
 	background-color: #FFFFFF;
 	box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
   height: 750px;

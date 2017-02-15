@@ -56,6 +56,8 @@
 	
 	var _bfs = __webpack_require__(3);
 	
+	var _dfs = __webpack_require__(4);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -65,7 +67,8 @@
 	
 	var searches = {
 	    astar: _algo.astar,
-	    bfs: _bfs.bfs
+	    bfs: _bfs.bfs,
+	    dfs: _dfs.dfs
 	};
 	
 	var astar_desc = "A* (star) is a search algorithm that is very popular in pathfinding and graph traversal because of its fast performance and accuracy. It works as a best-first search, solving the path by selecting the lowest cost option among possible paths (constructing a tree of paths one step at a time until a path reaches the endpoint).";
@@ -74,7 +77,8 @@
 	
 	var descriptions = {
 	    astar: astar_desc,
-	    bfs: bfs_desc
+	    bfs: bfs_desc,
+	    dfs: bfs_desc
 	};
 	
 	$(function () {
@@ -582,6 +586,8 @@
 	
 	var _bfs = __webpack_require__(3);
 	
+	var _dfs = __webpack_require__(4);
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	var Graph = function () {
@@ -724,11 +730,9 @@
 	
 	  search: function search(graph, start, end, options) {
 	    graph.clearNodes();
-	    var closest = options.closest || false;
 	
 	    var mySet = new Set();
 	    var myQueue = [];
-	    var closestNode = start; // set the start node to be the closest if required
 	
 	    graph.markVisited(start);
 	
@@ -764,8 +768,77 @@
 	      }
 	    }
 	
-	    if (closest) {
-	      return pathTo(closestNode);
+	    return [];
+	  },
+	  cleanNode: function cleanNode(node) {
+	    if (node === undefined) {
+	      return;
+	    }
+	    node.visited = false;
+	    node.closed = false;
+	    node.parent = null;
+	  }
+	};
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	function pathTo(end) {
+	  var currentNode = end;
+	  var path = [];
+	  while (currentNode.parent) {
+	    path.unshift(currentNode);
+	    currentNode = currentNode.parent;
+	  }
+	  return path;
+	}
+	
+	var dfs = exports.dfs = {
+	
+	  search: function search(graph, start, end, options) {
+	    graph.clearNodes();
+	
+	    var myStack = [];
+	
+	    graph.markVisited(start);
+	
+	    myStack.push(start);
+	
+	    while (myStack.length > 0) {
+	      var currentNode = myStack.pop();
+	
+	      if (currentNode === end) {
+	        return pathTo(currentNode);
+	      }
+	      if (currentNode === undefined) {
+	        return [];
+	      }
+	
+	      currentNode.closed = true;
+	
+	      var neighbors = graph.neighbors(currentNode);
+	
+	      for (var i = 0; i < neighbors.length; i++) {
+	        var neighbor = neighbors[i];
+	
+	        if (neighbor.closed || neighbor.isWall()) {
+	          continue;
+	        }
+	        var beenVisited = neighbor.visited;
+	
+	        if (!beenVisited) {
+	          myStack.push(neighbor);
+	          neighbor.visited = true;
+	          neighbor.parent = currentNode;
+	          graph.markVisited(neighbor);
+	        }
+	      }
 	    }
 	
 	    return [];
