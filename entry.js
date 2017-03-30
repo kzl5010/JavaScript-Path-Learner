@@ -169,6 +169,7 @@ class GraphSolver {
         return;
     }
     if (!this.startSet ) {
+      this.$cells.removeClass(css.first);
       $end.addClass(css.first);
       this.startSet = true;
       return;
@@ -254,7 +255,7 @@ class GraphSolver {
       };
       let setStartClass = function(path, i) {
           if(i === path.length) {
-              that.$graph.find("." + css.first).removeClass(css.first);
+              // that.$graph.find("." + css.first).removeClass(css.first);
               // elementFromNode(path[i-1]).addClass(css.first);
               that.startSet = false;
           }
@@ -285,6 +286,7 @@ class GraphSolver {
       };
 
       addClass(path, 0);
+      this.$graph.find("." + css.first).addClass(css.route); 
       this.$graph.find("." + css.first).removeClass(css.first);
       this.$graph.find("." + css.end).removeClass(css.end);
   };
