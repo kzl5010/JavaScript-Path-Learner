@@ -16,10 +16,11 @@ let astar_desc = "A* (star) is a search algorithm that is very popular in pathfi
 
 let bfs_desc = "Breadth-First-Search works by expanding outward in all four directions one step at a time from each node in order of its insertion into a Queue that contains all of the upcoming search targets, continuing until it finds the endpoint. The primary strength of BFS is the simplicity of implementation.";
 
+let dfs_desc = "Depth-First Search works by going as far as possible in one specific direction and upon encountering an obstacle or the edge of the maze and it continues again until the endpoint is found or all available tiles have been searched. This algorithm has been sped up by searching three tiles at a time. "
 let descriptions = {
   astar: astar_desc,
   bfs: bfs_desc,
-  dfs: bfs_desc
+  dfs: dfs_desc
 };
 
 $(function() {
