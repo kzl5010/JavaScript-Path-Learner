@@ -307,7 +307,7 @@
 	        key: 'traceRoute',
 	        value: function traceRoute(path) {
 	            var grid = this.grid,
-	                timeout = 18,
+	                timeout = 10,
 	
 	            // timeout = 1000 / grid.length,
 	            elementFromNode = function elementFromNode(node) {

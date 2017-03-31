@@ -237,7 +237,7 @@ class GraphSolver {
   };
   traceRoute(path) {
       let grid = this.grid,
-          timeout = 18,
+          timeout = 10,
           // timeout = 1000 / grid.length,
           elementFromNode = function(node) {
           return grid[node.x][node.y];
@@ -286,7 +286,7 @@ class GraphSolver {
       };
 
       addClass(path, 0);
-      this.$graph.find("." + css.first).addClass(css.route); 
+      this.$graph.find("." + css.first).addClass(css.route);
       this.$graph.find("." + css.first).removeClass(css.first);
       this.$graph.find("." + css.end).removeClass(css.end);
   };
